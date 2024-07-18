@@ -1,0 +1,122 @@
+{%  extends 'Masterindex.html'%}
+{% load static %}
+
+
+
+
+
+
+<!-- Navbar & Hero Start -->
+{%  block navbar  %}
+<div class="container-fluid position-relative p-0">
+    <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
+        <a href="" class="navbar-brand p-0">
+            <h1 class="text-primary m-0"><i class="fa fa-map-marker-alt me-3"></i>Murli Tailor</h1>
+            <!-- <img src="img/logo.png" alt="Logo"> -->
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="fa fa-bars"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto py-0">
+                <a href="{{curl}}TailorApp/tailorhome" class="nav-item nav-link active">Home</a>
+                <!-- <a href="about.html" class="nav-item nav-link">About</a> -->
+                <a href="{{curl}}TailorApp/editsdeatils" class="nav-item nav-link">Due details</a>
+                <a href="{{curl}}TailorApp/upgradeprogress" class="nav-item nav-link">Update Progress</a>  
+                <a href="{{curl}}TailorApp/searching" class="nav-item nav-link">Searching Custumer</a>
+            </div>
+            <a href="{{curl}}TailorApp/changepassword" class="btn btn-primary rounded-pill py-2 px-4">Settings</a> &nbsp; &nbsp;
+            <a href="{{curl}}login" class="btn btn-primary rounded-pill py-2 px-4">Log Out</a>
+        </div>
+    </nav>
+
+    <div class="container-fluid bg-primary py-5 mb-5 hero-header">
+        <div class="container py-5">
+            <div class="row justify-content-center py-5">
+                <div class="col-lg-10 pt-lg-5 mt-lg-5 text-center">
+                    <h1 class="display-3 text-white mb-3 animated slideInDown">Welcome Murli Tailor</h1>
+                    <p class="fs-4 text-white mb-4 animated slideInDown">Home</p>
+                    <div class="position-relative w-75 mx-auto animated slideInDown">
+                        <!-- <input class="form-control border-0 rounded-pill w-100 py-3 ps-4 pe-5" type="text" placeholder="Eg: Thailand">
+                        <button type="button" class="btn btn-primary rounded-pill py-2 px-4 position-absolute top-0 end-0 me-2" style="margin-top: 7px;">Search</button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%  endblock navbar %}
+
+
+
+
+{%  block about %}
+{%  endblock about %}
+{%  block service %}
+{%  endblock service %}
+{% block destination %}
+    
+{% endblock destination %}
+{% block package %}
+
+
+{% endblock package %}
+{% block booking %}
+<div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="container">
+        <div class="booking p-5">
+            <div class="row g-5 align-items-center">
+                <div class="col-md-6">
+                    <h1 class="text-white mb-4">{{ msg }}</h1>
+                    <form method="post" action="" novalidate>
+                        {% csrf_token %}
+                        {{msg}}
+                        <!-- Display UUID in a clear paragraph -->
+                        
+                        <p class="text-white">UUID : {{ form.Serial_no.value }}</p>
+                        <!-- Form fields in a structured table layout -->
+                        <div class="table-responsive">
+                            <table class="table table-borderless text-white">
+                                {{ form.as_table }}
+                            </table>
+                        </div>
+                        
+                        <!-- Add spacing and button styles -->
+                        <div class="col-12 mt-4">
+                            <button class="btn btn-outline-light w-100 py-3" type="submit">Add Customer</button>
+                        </div>
+                        <div class="col-12 mt-3">
+                            <a href="{{ curl }}TailorApp/addclothes" class="btn btn-outline-light w-100 py-3">Add Details</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock booking %}
+
+   
+
+{% block process %}
+{% endblock process %}
+{% block team %}
+{% endblock team %}
+
+{% block testimonial %}
+{% endblock testimonial %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

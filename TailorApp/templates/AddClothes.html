@@ -1,0 +1,221 @@
+{%  extends 'Masterindex.html'%}
+{% load static %}
+{% block navbar %}
+<div class="container-fluid">
+    <div class="row justify-content-center mt-5">
+        <div class="col-lg-10">
+            <div class="card shadow-lg p-4 mb-5 bg-white rounded">
+                <h2  class="mb-5">Customer Details</h2>
+                <div class="card-body">
+                    {% if context %}
+                        {% for x in context %}
+                        <div class="mb-4">
+                            <p class="h4 mb-1"><strong>Customer Name:</strong> <span class="text-info">{{ x.Custumer_name }}</span></p>
+                            <p class="h4 mb-1"><strong>Customer ID:</strong> <span class="text-info">{{ x.Custumerid }}</span></p>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-muted text-center">No customer details available.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center mb-5">
+    </div>
+</div>
+
+<a class="btn btn-primary py-3 px-5 mt-2" href="{{curl}}TailorApp/tailorhome">Add custumer</a>
+
+{% endblock navbar %}
+
+
+{%  block about %}
+
+{%  endblock about %}
+{%  block service %}
+{%  endblock service %}
+{% block destination %}
+    
+{% endblock destination %}
+{% block package %}
+
+
+{% endblock package %}
+ {% comment %} {% block booking %}
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+            <h6 class="section-title bg-white text-center text-primary px-3">Services</h6>
+            <h1 class="mb-5">Our Services</h1>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="service-item rounded pt-3">
+                    <div class="p-4">
+                        <i class="fa fa-3x fa-tshirt text-primary mb-4"></i>
+                        <h5>Single upper clothes</h5>
+                        <p> Only one item </p>
+                        <a class="btn btn-primary py-3 px-5 mt-2" href="{{curl}}TailorApp/uppersinglecloth">Select</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="service-item rounded pt-3">
+                    <div class="p-4">
+                        <i class="fa fa-3x fa-tshirt text-primary mb-4"></i>
+                        <h5>Single lower clothes</h5>
+                        <p>Only one item</p>
+                        <a class="btn btn-primary py-3 px-5 mt-2" href="{{curl}}TailorApp/lowersinglecloth">Select</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="service-item rounded pt-3">
+                    <div class="p-4">
+                        <i class="fa fa-3x fa-user text-primary mb-4"></i>
+                        <h5> A coupleclothes</h5>
+                        <p>Two item like shirt&pant</p>
+                        <a class="btn btn-primary py-3 px-5 mt-2" href="{{curl}}TailorApp/coupleclothes">Select</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
+                <div class="service-item rounded pt-3">
+                    <div class="p-4">
+                        <i class="fa fa-3x fa-user-friends text-primary mb-4"></i>
+                        <h5>Double couple clothes</h5>
+                        <p>Two couple items </p>
+                        <a class="btn btn-primary py-3 px-5 mt-2" href="{{curl}}TailorApp/doublecoupleclothes">Select</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="service-item rounded pt-3">
+                    <div class="p-4">
+                         <i class="fa fa-3x fa-users text-primary mb-4"></i>
+                        <h5>Triple clothes</h5>
+                        <p>Three couple items</p>
+                        <a class="btn btn-primary py-3 px-5 mt-2" href="{{curl}}TailorApp/tripleclothes">Select</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
+                <div class="service-item rounded pt-3">
+                    <div class="p-4">
+                         <i class="fa fa-3x fa-receipt text-primary mb-4"></i>
+                        <h5>Generate recipt </h5>
+                        <p>generate recipt for custumer</p>
+                        <a class="btn btn-primary py-3 px-5 mt-2" href="{{curl}}TailorApp/invoice">Select</a>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock booking %}{% endcomment %}
+{% block booking %}
+
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+            <h6 class="section-title bg-white text-center text-primary px-3 d-inline-block">Services</h6>
+            <h1 class="mb-5">Our Services</h1>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="service-item rounded">
+                    <div class="p-4 text-center">
+                        <i class="fa fa-3x fa-tshirt text-primary mb-4"></i>
+                        <h5 class="mb-3">Single Upper Clothes</h5>
+                        <p>Only one item</p>
+                        <a class="btn btn-outline-primary py-2 px-4 mt-3" href="{{curl}}TailorApp/uppersinglecloth">Select</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="service-item rounded">
+                    <div class="p-4 text-center">
+                        <i class="fa fa-3x fa-tshirt text-primary mb-4"></i><!-- Placeholder icon for pants -->
+                        <h5 class="mb-3">Single Lower Clothes</h5>
+                        <p>Only one item</p>
+                        <a class="btn btn-outline-primary py-2 px-4 mt-3" href="{{curl}}TailorApp/lowersinglecloth">Select</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="service-item rounded">
+                    <div class="p-4 text-center">
+                        <i class="fa fa-3x fa-user text-primary mb-4"></i>
+                        <h5 class="mb-3">Couple Clothes</h5>
+                        <p>Two items like shirt & pant</p>
+                        <a class="btn btn-outline-primary py-2 px-4 mt-3" href="{{curl}}TailorApp/coupleclothes">Select</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
+                <div class="service-item rounded">
+                    <div class="p-4 text-center">
+                        <i class="fa fa-3x fa-user-friends text-primary mb-4"></i>
+                        <h5 class="mb-3">Double Clothes</h5>
+                        <p>Two couple items</p>
+                        <a class="btn btn-outline-primary py-2 px-4 mt-3" href="{{curl}}TailorApp/doublecoupleclothes">Select</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="service-item rounded">
+                    <div class="p-4 text-center">
+                        <i class="fa fa-3x fa-users text-primary mb-4"></i>
+                        <h5 class="mb-3">Triple Clothes</h5>
+                        <p>Three couple items</p>
+                        <a class="btn btn-outline-primary py-2 px-4 mt-3" href="{{curl}}TailorApp/tripleclothes">Select</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
+                <div class="service-item rounded">
+                    <div class="p-4 text-center">
+                        <i class="fa fa-3x fa-receipt text-primary mb-4"></i>
+                        <h5 class="mb-3">Generate Receipt</h5>
+                        <p>Generate receipt for customer</p>
+                        <a class="btn btn-outline-primary py-2 px-4 mt-3" href="{{curl}}TailorApp/invoice">Select</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock booking %} 
+
+
+
+{% block process %}
+{% endblock process %}
+{% block team %}
+{% endblock team %}
+
+
+{% block testimonial %}
+{% endblock testimonial %}
+{% block footer %}
+{% endblock footer %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

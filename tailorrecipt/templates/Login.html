@@ -1,0 +1,103 @@
+{% extends 'Masterindex.html' %}
+{% load static %}
+
+<!-- Navbar & Hero Start -->
+{% block navbar %}
+<div class="container-fluid position-relative p-0">
+    <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
+        <a href="" class="navbar-brand p-0">
+            <h1 class="text-primary m-0"><i class="fa fa-map-marker-alt me-3"></i>Murli Tailor</h1>
+            <!-- <img src="img/logo.png" alt="Logo"> -->
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="fa fa-bars"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto py-0">
+                <a href="{{ curl }}" class="nav-item nav-link active">Home</a>
+                <a href="{{ curl }}service" class="nav-item nav-link">Services</a>
+                <a href="{{ curl }}contact" class="nav-item nav-link">Contact</a>
+                <a href="{{ curl }}search" class="nav-item nav-link">Search</a>
+            </div>
+            <a href="{{ curl }}login" class="btn btn-primary rounded-pill py-2 px-4">Login</a>
+            <a href="{{ curl }}register" class="btn btn-primary rounded-pill py-2 px-4 ms-2">Register</a>
+        </div>
+    </nav>
+
+    <div class="container-fluid bg-primary py-5 mb-5 hero-header">
+        <div class="container py-5">
+            <div class="row justify-content-center py-5">
+                <div class="col-lg-10 pt-lg-5 mt-lg-5 text-center">
+                    <h1 class="display-3 text-white mb-3 animated slideInDown">Login</h1>
+                    <p class="fs-4 text-white mb-4 animated slideInDown">Welcome</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock navbar %}
+
+{% block about %}
+<div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="container">
+        <div class="booking p-5">
+            <div class="row g-5 align-items-center">
+                <div class="col-md-6 text-white">
+                    <h6 class="text-white text-uppercase">Login Form</h6>
+                    <h1 class="text-white mb-4">Welcome</h1>
+                    <p class="mb-4">Dear user, please login for more future access. Please enter valid details and click the login button.</p>
+                    <p class="mb-4">If you forgot your password, click the "Forgot Password" button to reset it.</p>
+                    <a class="btn btn-outline-light py-3 px-5 mt-2" href="">Forgot Password</a>
+                </div>
+                <div class="col-md-6">
+                    <h1 class="text-white mb-4">Admin Login</h1>
+                    <form method="post" action="" novalidate>
+                        {% csrf_token %}
+                        {{msg}}
+                        <div class="table-responsive">
+                            <table class="table table-borderless text-white">
+                                {{ form.as_table }}
+                            </table>
+                        </div>
+                        <div class="mb-3">
+                            <button class="btn btn-outline-light w-100 py-3" type="submit">Sign In</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock about %}
+
+{%  block service %}
+{%  endblock service %}
+{% block destination %}
+    
+{% endblock destination %}
+{% block package %}
+
+
+{% endblock package %}
+{% block booking %}
+{% endblock booking %}
+{% block process %}
+{% endblock process %}
+{% block team %}
+{% endblock team %}
+
+{% block testimonial %}
+{% endblock testimonial %}
+
+
+
+
+
+
+
+
+
+
+
+
+

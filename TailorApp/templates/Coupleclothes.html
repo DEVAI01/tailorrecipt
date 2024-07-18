@@ -1,0 +1,308 @@
+{%  extends 'Masterindex.html'%}
+{% load static %}
+{%  block navbar  %}
+<div class="container-fluid">
+    <div class="row justify-content-center mt-5">
+        <div class="col-lg-10">
+            <div class="card shadow-lg p-4 mb-5 bg-white rounded">
+                <h2  class="mb-5">Customer Details</h2>
+                <div class="card-body">
+                    {% if context %}
+                        {% for x in context %}
+                        <div class="mb-4">
+                            <p class="h4 mb-1"><strong>Customer Name:</strong> <span class="text-info">{{ x.Custumer_name }}</span></p>
+                            <p class="h4 mb-1"><strong>Customer ID:</strong> <span class="text-info">{{ x.Custumerid }}</span></p>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-muted text-center">No customer details available.</p>
+                    {% endif %}
+                    <h4>{{ request.GET.msg }}</h4> <br>
+                    <h4>{{ request.GET.msg1 }}</h4> <br>
+                    <h4>{{ request.GET.msg2}}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center mb-5">
+    </div>
+</div>
+<br>
+<marquee behavior="scroll" direction="left" scrollamount="10" style="font-size: 50px; font-weight: bold; color: rgb(26, 26, 74);;" >Couple clothes</marquee>
+
+{%  endblock navbar %}
+{%  block about %}
+<a class="btn btn-primary py-3 px-5 mt-2" style=" margin-left: 90%;" href="{{curl}}TailorApp/addclothes">Services</a>
+{%  endblock about %}
+{%  block service %}
+{%  endblock service %}
+{% block destination %}
+    
+{% endblock destination %}
+{% block package %}
+
+
+{% endblock package %}
+{% block booking %}
+<div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="container">
+        <div class="booking2 p-5">
+            <div class="row g-5 align-items-center">
+                <div class="col-md-6">
+                    <h1 class="text-white mb-4">Upper Clothes Details</h1>
+                    <form method="post" action="" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% for x in context %}
+                            <input type="hidden" readonly name="custumerid" value="{{ x.Custumerid }}">
+                        {% endfor %}
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <select class="form-select bg-transparent" required name="firstitem" id="select1">
+                                        <option value="Shirt">Shirt</option>
+                                        <option value="Kurta">Kurta</option>
+                                        <option value="Kamij">Kamij</option>
+                                        <option value="Safari Suit">Safari Suit</option>
+                                        <option value="Pathani Suit">Pathani Suit</option>
+                                        <option value="Jacket">Jacket</option>
+                                        <option value="Blazers(coat)">Blazers (coat)</option>
+                                    </select>
+                                    <label for="select1">Request</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="number" class="form-control bg-transparent" required name="firstquantity" min="1" placeholder="Quantity">
+                                    <label for="firstquantity">Quantity</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-transparent" required name="frontlength" placeholder="Front length">
+                                    <label for="frontlength">Front length</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-transparent" required name="shoulder" placeholder="Shoulder">
+                                    <label for="shoulder">Shoulder</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-transparent" required name="chest" placeholder="Chest">
+                                    <label for="chest">Chest</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-transparent" required name="wrist" placeholder="Wrist">
+                                    <label for="wrist">Wrist</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-transparent" required name="hips" placeholder="Hips">
+                                    <label for="hips">Hips</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-transparent" required name="sleeves" placeholder="Sleeves">
+                                    <label for="sleeves">Sleeves</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-transparent" required name="biseps" placeholder="Biseps">
+                                    <label for="biseps">Biseps</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-transparent" required name="cuff" placeholder="Cuff">
+                                    <label for="cuff">Cuff</label>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-transparent" required name="callor" placeholder="Collar">
+                                    <label >Collar</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="file" name="firstimageicon" required class="form-control bg-transparent">
+                                    <label for="firstimageicon">Image</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <textarea class="form-control bg-transparent" placeholder="Special Request" name="firstmessage" style="height: 100px"></textarea>
+                                    <label for="firstmessage">About Request</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h1 class="text-white mb-4" style="margin-top: 20px;">Lower Clothes Details</h1>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <select class="form-select bg-transparent" required name="seconditem" id="select2">
+                                        <option value="Pant">Pant</option>
+                                        <option value="Pazama">Pazama</option>
+                                        <option value="Salwar">Salwar</option>
+                                        <option value="Belt salwar">Belt salwar</option>
+                                        <option value="Legi">Legi</option>
+                                    </select>
+                                    <label for="select2">Request</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="number" class="form-control bg-transparent" required name="secondquantity" min="1" placeholder="Quantity">
+                                    <label for="secondquantity">Quantity</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-transparent" required name="fulllength" placeholder="Full length">
+                                    <label for="fulllength">Full length</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-transparent" required name="waist" placeholder="Waist (kamar)">
+                                    <label for="waist">Waist (kamar)</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-transparent" required name="hipss" placeholder="Hips">
+                                    <label for="hipss">Hips</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-transparent" required name="thigh" placeholder="Thigh">
+                                    <label for="thigh">Thigh</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-transparent" required name="rise" placeholder="Rise (latak)">
+                                    <label for="rise">Rise (latak)</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-transparent" required name="knee" placeholder="Knee">
+                                    <label for="knee">Knee</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-transparent" required name="uplegoppening" placeholder="Uplegoppening">
+                                    <label for="uplegoppening">Uplegoppening</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-transparent" required name="legoppening" placeholder="Legoppening">
+                                    <label for="legoppening">Ankle</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-transparent" name="other" placeholder="Other">
+                                    <label for="other">Other</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="file" name="secondimageicon" required class="form-control bg-transparent">
+                                    <label for="secondimageicon">Image</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <textarea class="form-control bg-transparent" placeholder="Special Request" name="secondmessage" style="height: 100px"></textarea>
+                                    <label for="secondmessage">About Request</label>
+                                    <h1 style="margin-top: 2%;" class="text-white mb-4">Payment details</h1>
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <div class="form-floating">
+                                                <input type="number" class="form-control bg-transparent" required oninput="calculateDueAmount()" id="totalAmount" name="totalAmount" placeholder="Total amount">
+                                                <label for="totalAmount">Total amount</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating">
+                                                <input type="number" class="form-control bg-transparent" required oninput="calculateDueAmount()" id="advancedAmount" name="advancedAmount" placeholder="Advance amount">
+                                                <label for="advancedAmount">Advance amount</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control bg-transparent" id="dueAmount" name="dueAmount" placeholder="Due amount" readonly>
+                                                <label for="dueAmount">Due amount</label>
+                                            </div>
+                                        </div>
+
+                            <script>
+                                function calculateDueAmount() {
+                                  // Get values from input fields
+                                  var totalAmount = parseFloat(document.getElementById('totalAmount').value) || 0;
+                                  var advancedAmount = parseFloat(document.getElementById('advancedAmount').value) || 0;
+                            
+                                  // Calculate due amount
+                                  var dueAmount = Math.max(totalAmount - advancedAmount, 0);
+                            
+                                  // Update the "Due Amount" input field
+                                  document.getElementById('dueAmount').value = dueAmount.toFixed();
+                                }
+                              </script>
+                            
+                            </body>
+
+                            
+
+
+                            <div class="col-12">
+                                <button style="margin-left: 1%; margin-top: 4%;" class="btn btn-outline-light w-100 py-3" type="submit">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock booking %}
+{% block process %}
+{% endblock process %}
+{% block team %}
+{% endblock team %}
+
+
+{% block testimonial %}
+{% endblock testimonial %}
+{% block footer %}
+{% endblock footer %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   

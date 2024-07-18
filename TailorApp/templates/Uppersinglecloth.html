@@ -1,0 +1,223 @@
+{%  extends 'Masterindex.html'%}
+
+{% load static %}
+{%  block navbar  %}
+<div class="container-fluid">
+    <div class="row justify-content-center mt-5">
+        <div class="col-lg-10">
+            <div class="card shadow-lg p-4 mb-5 bg-white rounded">
+                <h2  class="mb-5">Customer Details</h2>
+                <div class="card-body">
+                    {% if context %}
+                        {% for x in context %}
+                        <div class="mb-4">
+                            <p class="h4 mb-1"><strong>Customer Name:</strong> <span class="text-info">{{ x.Custumer_name }}</span></p>
+                            <p class="h4 mb-1"><strong>Customer ID:</strong> <span class="text-info">{{ x.Custumerid }}</span></p>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-muted text-center">No customer details available.</p>
+                    {% endif %}
+                    <h4>{{ request.GET.msg }}</h4> <br>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center mb-5">
+    </div>
+</div>
+<marquee behavior="scroll" direction="left" scrollamount="10" style="font-size: 50px; font-weight: bold; color: rgb(26, 26, 74);;" >upper single cloth</marquee>
+
+
+
+{%  endblock navbar %}
+{%  block about %}
+<a class="btn btn-primary py-3 px-5 mt-2" style=" margin-left: 90%;" href="{{curl}}TailorApp/addclothes">Services</a>
+{%  endblock about %}
+{%  block service %}
+{%  endblock service %}
+{% block destination %}
+    
+{% endblock destination %}
+{% block package %}
+
+
+{% endblock package %}
+
+{% block booking %}
+<div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="container">
+        <div class="booking2 p-5">
+            <div class="row g-5 align-items-center">
+                <div class="col-md-6">
+                    <h1 class="text-white mb-4">Clothes Details</h1>
+                    <form method="post" action="" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% for x in context %}
+                        <input type="hidden" readonly name="custumerid" value="{{ x.Custumerid }}">
+                        <input type="hidden" readonly name="custumermobile" value="{{ x.Custumer_mobile }}">
+                        {% endfor %}
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <select class="form-select bg-transparent" required name="item" id="select1">
+                                        <option value="Shirt">Shirt</option>
+                                        <option value="Kurta">Kurta</option>
+                                        <option value="Kamij">Kamij</option>
+                                        <option value="Safari Suit">Safari Suit</option>
+                                        <option value="Pathani Suit">Pathani Suit</option>
+                                        <option value="Jacket">Jacket</option>
+                                        <option value="Blazers(coat)">Blazers(coat)</option>
+                                    </select>
+                                    <label for="select1">Request</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="number" class="form-control bg-transparent" required name="quantity" min="1" placeholder="Quantity">
+                                    <label for="quantity">Quantity</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-transparent" required name="frontlength" placeholder="Front length">
+                                    <label for="frontlength">Front length</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-transparent" required name="shoulder" placeholder="Shoulder">
+                                    <label for="shoulder">Shoulder</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-transparent" required name="chest" placeholder="Chest">
+                                    <label for="chest">Chest</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-transparent" required name="wrist" placeholder="Wrist">
+                                    <label for="wrist">Wrist</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-transparent" required name="hips" placeholder="Hips">
+                                    <label for="hips">Hips</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-transparent" required name="sleeves" placeholder="Sleeves">
+                                    <label for="sleeves">Sleeves</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-transparent" required name="biseps" placeholder="Biseps">
+                                    <label for="biseps">Biseps</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-transparent" required name="cuff" placeholder="Cuff">
+                                    <label for="cuff">Cuff</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-transparent" required name="callor" placeholder="Collar">
+                                    <label for="callor">Collar</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="file" name="imageicon" required class="form-control bg-transparent" placeholder="">
+                                    <label for="imageicon"></label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <textarea class="form-control bg-transparent" placeholder="Special Request" name="message" style="height: 100px"></textarea>
+                                    <label for="message">About Request</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <h1 class="text-white mt-4 mb-4">Payment Details</h1>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="number" class="form-control bg-transparent" required oninput="calculateDueAmount()" id="totalAmount" name="totalAmount" placeholder="Total amount">
+                                    <label for="totalAmount">Total amount</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="number" class="form-control bg-transparent" required oninput="calculateDueAmount()" id="advancedAmount" name="advancedAmount" placeholder="Advance amount">
+                                    <label for="advancedAmount">Advanced amount</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-transparent" id="dueAmount" name="dueAmount" placeholder="Due amount">
+                                    <label for="dueAmount">Due amount</label>
+                                </div>
+                            </div>
+                         
+                            <script>
+                                function calculateDueAmount() {
+                                  // Get values from input fields
+                                  var totalAmount = parseFloat(document.getElementById('totalAmount').value) || 0;
+                                  var advancedAmount = parseFloat(document.getElementById('advancedAmount').value) || 0;
+                            
+                                  // Calculate due amount
+                                  var dueAmount = Math.max(totalAmount - advancedAmount, 0);
+                            
+                                  // Update the "Due Amount" input field
+                                  document.getElementById('dueAmount').value = dueAmount.toFixed();
+                                }
+                              </script>
+                            
+                            </body>
+
+                            
+
+
+                            <div class="col-12">
+                                <button style="margin-left: 1%; margin-top: 4%;" class="btn btn-outline-light w-100 py-3" type="submit">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock booking %}
+{% block process %}
+{% endblock process %}
+{% block team %}
+{% endblock team %}
+
+
+{% block testimonial %}
+{% endblock testimonial %}
+{% block footer %}
+{% endblock footer %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

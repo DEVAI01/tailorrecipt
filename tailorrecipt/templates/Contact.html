@@ -1,0 +1,158 @@
+
+{%  extends 'Masterindex.html' %}
+{% load static %}
+
+
+
+
+<!-- Navbar & Hero Start -->
+{%  block navbar  %}
+<div class="container-fluid position-relative p-0">
+    <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
+        <a href="" class="navbar-brand p-0">
+            <h1 class="text-primary m-0"><i class="fa fa-map-marker-alt me-3"></i>Murli Tailor</h1>
+            <!-- <img src="img/logo.png" alt="Logo"> -->
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="fa fa-bars"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto py-0">
+                <a href="{{curl}}" class="nav-item nav-link active">Home</a>
+                <!-- <a href="about.html" class="nav-item nav-link">About</a> -->
+                <a href="{{curl}}service" class="nav-item nav-link">Services</a>
+                <!-- <a href="package.html" class="nav-item nav-link">Packages</a> -->
+                 <!-- <div class="nav-item dropdown">
+                    <a href="{{curl}}pages" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a> 
+                     <div class="dropdown-menu m-0">
+                        <a href="destination.html" class="dropdown-item">Destination</a>
+                        <a href="booking.html" class="dropdown-item">Booking</a>
+                        <a href="team.html" class="dropdown-item">Travel Guides</a>
+                        <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                        <a href="404.html" class="dropdown-item">404 Page</a> 
+                    </div>
+                </div> -->
+                <a href="{{curl}}contact" class="nav-item nav-link">Contact</a>
+                <a href="{{curl}}search" class="nav-item nav-link">Search</a>
+            </div>
+            <a href="{{curl}}login" class="btn btn-primary rounded-pill py-2 px-4" SPACE >Login</a> &nbsp; &nbsp;
+            <a href="{{curl}}register" class="btn btn-primary rounded-pill py-2 px-4">Register</a>
+        </div>
+    </nav>
+
+    <div class="container-fluid bg-primary py-5 mb-5 hero-header">
+        <div class="container py-5">
+            <div class="row justify-content-center py-5">
+                <div class="col-lg-10 pt-lg-5 mt-lg-5 text-center">
+                    <h1 class="display-3 text-white mb-3 animated slideInDown">Contact Us</h1>
+                    <p class="fs-4 text-white mb-4 animated slideInDown">Welcome</p>
+                    <div class="position-relative w-75 mx-auto animated slideInDown">
+                        <!-- <input class="form-control border-0 rounded-pill w-100 py-3 ps-4 pe-5" type="text" placeholder="Eg: Thailand">
+                        <button type="button" class="btn btn-primary rounded-pill py-2 px-4 position-absolute top-0 end-0 me-2" style="margin-top: 7px;">Search</button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%  endblock navbar %}
+
+
+
+
+{%  block about %}
+{%  endblock about %}
+{%  block service %}
+{%  endblock service %}
+
+{% block destination %}
+
+{% endblock destination %}
+{% block package %}
+{% endblock package %}
+{% block booking %}
+    <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container">
+            <div class="booking2 p-5">
+                <div class="row g-5 align-items-center">
+                    <div class="col-md-6 text-white">
+                        <h6 class="text-white text-uppercase">Welcome</h6>
+                        <h1 class="text-white mb-4">Contact Us</h1>
+                        <p class="mb-4">Mail Id - Murlitailors.com.</p>
+                        <p class="mb-4">Hello... <br>
+                            User you have any problem ,you will contact <br> us and we assure your problem will shorted in few time </p>
+                        <a class="btn btn-outline-light py-3 px-5 mt-2" href="">Thank you </a>
+                    </div>
+                    <div class="col-md-6">
+                        <h1 class="text-white mb-4">Get In Touch</h1>
+                        <form>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control bg-transparent" id="name" placeholder="Your Name">
+                                        <label for="name">Your Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="email" class="form-control bg-transparent" id="email" placeholder="Your Email">
+                                        <label for="email">Your Email</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating date" id="date3" data-target-input="nearest">
+                                        <input type="text" class="form-control bg-transparent" id="mobile" placeholder="Mobile No." />
+                                        <label for="datetime">Mobile No.</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <select class="form-select bg-transparent" id="select1">
+                                            <option value="1">Service Request</option>
+                                            <option value="2">Login and Register </option>
+                                            <option value="3">Other Problem</option>
+                                        </select>
+                                        <label for="select1">Request</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-floating">
+                                        <textarea class="form-control bg-transparent" placeholder="Special Request" id="message" style="height: 100px"></textarea>
+                                        <label for="message">About Request</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn btn-outline-light w-100 py-3" type="submit">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock booking %}
+
+
+{% block process %}
+{% endblock process %}
+{% block team %}
+{% endblock team %}
+
+{% block testimonial %}
+    
+{% endblock testimonial %}
+
+{% block footer %}
+{% endblock footer %}
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>मुरली टेलर्स रसीद</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .receipt {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #FF4500; /* Bright orange background */
+            color: #000000; /* Black text for better readability */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #FFFFFF; /* White color for the main title */
+            margin-bottom: 5px;
+        }
+        .address {
+            text-align: center;
+            font-size: 0.9em;
+            margin-top: 0;
+        }
+        .details {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: #FFEBCD; /* Light orange for table background */
+        }
+        th, td {
+            border: 1px solid #000000;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #FF8C00; /* Darker orange for table header */
+            color: #FFFFFF;
+        }
+        input {
+            width: 90%;
+            padding: 5px;
+            border: 1px solid #FF8C00;
+        }
+        .totals {
+            text-align: right;
+            background-color: #FFEBCD;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .note, .motto {
+            font-size: 0.8em;
+            text-align: center;
+            margin-top: 20px;
+            background-color: #FFEBCD;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="receipt">
+        <h1>मुरली टेलर्स</h1>
+        <p class="address">लालाजी मार्केट, बकायन रोड, खरदौन कला<br>
+        जिला-शाजापुर, मो. 9993658413, 9630168370</p>
+        
+        <div class="details">
+            <p>दिनांक: <input type="date" id="date"></p>
+            <p>श्रीमान: <input type="text" id="customer-name"></p>
+            <p>क्रमांक: <span id="receipt-number">4701</span></p>
+        </div>
+        
+        <table id="items">
+            <tr>
+                <th>विवरण</th>
+                <th>नग</th>
+                <th>रुपये</th>
+            </tr>
+            <tr>
+                <td>पेन्ट</td>
+                <td><input type="number" class="quantity"></td>
+                <td><input type="number" class="price"></td>
+            </tr>
+            <tr>
+                <td>शर्ट</td>
+                <td><input type="number" class="quantity"></td>
+                <td><input type="number" class="price"></td>
+            </tr>
+            <tr>
+                <td>कुर्ता</td>
+                <td><input type="number" class="quantity"></td>
+                <td><input type="number" class="price"></td>
+            </tr>
+            <tr>
+                <td>कमीज</td>
+                <td><input type="number" class="quantity"></td>
+                <td><input type="number" class="price"></td>
+            </tr>
+            <tr>
+                <td>पटनी सूट</td>
+                <td><input type="number" class="quantity"></td>
+                <td><input type="number" class="price"></td>
+            </tr>
+        </table>
+        
+        <div class="totals">
+            <p>योग: <span id="total">0</span></p>
+            <p>जमा: <input type="number" id="deposit"></p>
+            <p>बाकी: <span id="balance">0</span></p>
+        </div>
+        
+        <p class="note">नोट: ग्राहक 1 माह के अन्दर कपड़े उठाकर नहीं ले जाने पर हमारी कोई जवाबदारी नहीं होगी । रसीद अनिवार्य है ।</p>
+        <p class="motto">एक भाव, नगद व्यवहार</p>
+    </div>
+
+    <script>
+        // JavaScript remains unchanged
+        document.addEventListener('DOMContentLoaded', function() {
+            const items = document.getElementById('items');
+            const totalSpan = document.getElementById('total');
+            const depositInput = document.getElementById('deposit');
+            const balanceSpan = document.getElementById('balance');
+
+            function updateTotals() {
+                let total = 0;
+                const rows = items.querySelectorAll('tr:not(:first-child)');
+                rows.forEach(row => {
+                    const quantity = parseFloat(row.querySelector('.quantity').value) || 0;
+                    const price = parseFloat(row.querySelector('.price').value) || 0;
+                    total += quantity * price;
+                });
+
+                totalSpan.textContent = total.toFixed(2);
+                updateBalance();
+            }
+
+            function updateBalance() {
+                const total = parseFloat(totalSpan.textContent);
+                const deposit = parseFloat(depositInput.value) || 0;
+                const balance = total - deposit;
+                balanceSpan.textContent = balance.toFixed(2);
+            }
+
+            items.addEventListener('input', updateTotals);
+            depositInput.addEventListener('input', updateBalance);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,214 @@
+{%  extends 'Masterindex.html'%}
+{% load static %}
+
+
+
+
+
+
+<!-- Navbar & Hero Start -->
+{%  block navbar  %}
+<div class="container-fluid position-relative p-0">
+    <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
+        <a href="" class="navbar-brand p-0">
+            <h1 class="text-primary m-0"><i class="fa fa-map-marker-alt me-3"></i>Murli Tailor</h1>
+            <!-- <img src="img/logo.png" alt="Logo"> -->
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="fa fa-bars"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto py-0">
+                <a href="{{curl}}CustumerApp/custumer" class="nav-item nav-link active">Home</a>
+                <!-- <a href="about.html" class="nav-item nav-link">About</a> -->
+                <a href="{{curl}}CustumerApp/services" class="nav-item nav-link">Services</a>
+                <a href="{{curl}}CustumerApp/bookings" class="nav-item nav-link">Bookings</a>  
+                <a href="{{curl}}CustumerApp/chatus" class="nav-item nav-link">Chat Us</a>
+            </div>
+            <a href="{{curl}}CustumerApp/custumersettings" class="btn btn-primary rounded-pill py-2 px-4">Settings</a> &nbsp; &nbsp;
+            <a href="{{curl}}login" class="btn btn-primary rounded-pill py-2 px-4">Log Out</a>
+        </div>
+    </nav>
+
+    <div class="container-fluid bg-primary py-5 mb-5 hero-header">
+        <div class="container py-5">
+            <div class="row justify-content-center py-5">
+                <div class="col-lg-10 pt-lg-5 mt-lg-5 text-center">
+                    <h1 class="display-3 text-white mb-3 animated slideInDown">Welcome Custumer</h1>
+                    <p class="fs-4 text-white mb-4 animated slideInDown">Booking</p>
+                    <div class="position-relative w-75 mx-auto animated slideInDown">
+                        <!-- <input class="form-control border-0 rounded-pill w-100 py-3 ps-4 pe-5" type="text" placeholder="Eg: Thailand">
+                        <button type="button" class="btn btn-primary rounded-pill py-2 px-4 position-absolute top-0 end-0 me-2" style="margin-top: 7px;">Search</button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%  endblock navbar %}
+
+
+
+
+{%  block about %}
+{%  endblock about %}
+{%  block service %}
+{%  endblock service %}
+{% block destination %}
+    
+{% endblock destination %}
+{% block package %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Booking</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container">
+            <div class="booking2 p-5">
+                <div class="row g-5 align-items-center">
+                    <div class="col-md-6 text-white">
+                        <h6 class="text-white text-uppercase">Welcome</h6>
+                        <h1 class="text-white mb-4">Booking Us</h1>
+                        <p class="mb-4">Mail Id - Murlitailors.com.</p>
+                        <p class="mb-4">Hello... <br>
+                            User you have any problem, you will contact <br> us and we assure your problem will be sorted in few time </p>
+                        <a class="btn btn-outline-light py-3 px-5 mt-2" href="">Thank you</a>
+                    </div>
+                    <div class="col-md-6">
+                        <h1 class="text-white mb-4">FOR booking fill details</h1>
+                        <form action="" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <ul class="nav nav-tabs mb-4" id="clothingTabs" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="upperWearTab" data-bs-toggle="tab" data-bs-target="#upperWear" type="button" role="tab" aria-controls="upperWear" aria-selected="true">Upper Wear</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="lowerWearTab" data-bs-toggle="tab" data-bs-target="#lowerWear" type="button" role="tab" aria-controls="lowerWear" aria-selected="false">Lower Wear</button>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <!-- Upper Wear Tab Content -->
+                                <div class="tab-pane fade show active" id="upperWear" role="tabpanel" aria-labelledby="upperWearTab">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="upper_wear" id="shirt" value="Shirt">
+                                                <label class="form-check-label" for="shirt">Shirt</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="upper_wear" id="kurta" value="Kurta">
+                                                <label class="form-check-label" for="kurta">Kurta</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="upper_wear" id="kamij" value="Kamij">
+                                                <label class="form-check-label" for="kamij">Kamij</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="upper_wear" id="safari_suit" value="Safari Suit">
+                                                <label class="form-check-label" for="safari_suit">Safari Suit</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="upper_wear" id="pathani_suit" value="Pathani Suit">
+                                                <label class="form-check-label" for="pathani_suit">Pathani Suit</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="upper_wear" id="jacket" value="Jacket">
+                                                <label class="form-check-label" for="jacket">Jacket</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="upper_wear" id="blazers" value="Blazers(coat)">
+                                                <label class="form-check-label" for="blazers">Blazers (coat)</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Lower Wear Tab Content -->
+                                <div class="tab-pane fade" id="lowerWear" role="tabpanel" aria-labelledby="lowerWearTab">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="lower_wear" id="pant" value="Pant">
+                                                <label class="form-check-label" for="pant">Pant</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="lower_wear" id="pazama" value="Pazama">
+                                                <label class="form-check-label" for="pazama">Pazama</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="lower_wear" id="salwar" value="Salwar">
+                                                <label class="form-check-label" for="salwar">Salwar</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="lower_wear" id="belt_salwar" value="Belt salwar">
+                                                <label class="form-check-label" for="belt_salwar">Belt Salwar</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="lower_wear" id="legi" value="Legi">
+                                                <label class="form-check-label" for="legi">Legi</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 mt-3">
+                                <div class="form-floating">
+                                    <textarea class="form-control bg-transparent" placeholder="Special Request" id="message" name="description" style="height: 100px"></textarea>
+                                    <label for="message">About Request</label>
+                                </div>
+                            </div>
+                            <div class="col-12 mt-3">
+                                <button class="btn btn-outline-light w-100 py-3" type="submit">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+{% endblock package %}
+{% block booking %}
+<!-- CustumerHome.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Home</title>
+</head>
+<body>
+    <h1>Welcome, {{ email }}</h1>
+    <p>{{ msg }}</p>
+</body>
+</html>
+{% endblock booking %}
+
+
+
+{% block process %}
+{% endblock process %}
+{% block team %}
+{% endblock team %}
+
+{% block testimonial %}
+{% endblock testimonial %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

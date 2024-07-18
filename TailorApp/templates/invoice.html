@@ -1,0 +1,98 @@
+{%  extends 'Masterindex.html'%}
+{% load static %}
+{%  block navbar  %}
+{% for x in context %}
+    <h6 class="section-title bg-white text-center text-primary px-3">Custumer name = {{ x.Custumer_name }}</h6>
+    <h6 class="section-title bg-white text-center text-primary px-3">Custumer ID = {{ x.Custumerid}}</h6>
+    
+
+{% endfor %}
+<br>
+    <br>
+    <marquee behavior="scroll" direction="left" scrollamount="10" style="font-size: 50px; font-weight: bold; color: rgb(26, 26, 74);;" >This service is not available please used another</marquee>
+
+
+{%  endblock navbar %}
+{%  block about %}  
+<a class="btn btn-primary py-3 px-5 mt-2" style=" margin-left: 90%;" href="{{curl}}TailorApp/addclothes">Services</a>
+{%  endblock about %}
+{%  block service %}
+{%  endblock service %}
+{% block destination %}
+    
+{% endblock destination %}
+{% block package %}
+
+
+{% endblock package %}
+{% block booking %}
+<!-- templates/invoice_template.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Invoice for {{ customer.Custumer_name }}</h1>
+        <p>Customer Mobile: {{ customer.Custumer_mobile }}</p>
+        <p>Delivery Date: {{ customer.Delivery_date }}</p>
+        
+        <h2>Upper Clothes Information</h2>
+        <ul>
+            {% for item in upper_details %}
+            <li>Item: {{ item.Item }}, Quantity: {{ item.Quantity }}, Front Length: {{ item.Frontlength }}</li>
+            {% endfor %}
+        </ul>
+        
+        <h2>Lower Clothes Information</h2>
+        <ul>
+            {% for item in lower_details %}
+            <li>Item: {{ item.Item }}, Quantity: {{ item.Quantity }}, Full Length: {{ item.Fulllength }}</li>
+            {% endfor %}
+        </ul>
+        
+        <h2>Payment Details</h2>
+        <p>Total Amount: {{ payment_details.Totalamount }}</p>
+        <p>Advance Amount: {{ payment_details.Advanceamount }}</p>
+        <p>Due Amount: {{ payment_details.Dueamount }}</p>
+        
+        <a href="{% url 'invoice' %}" class="btn btn-primary">Download Invoice</a>
+    </div>
+</body>
+</html>
+
+
+
+
+
+{% endblock booking %}
+{% block process %}
+{% endblock process %}
+{% block team %}
+{% endblock team %}
+
+
+{% block testimonial %}
+{% endblock testimonial %}
+{% block footer %}
+{% endblock footer %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   

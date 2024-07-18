@@ -1,0 +1,209 @@
+{%  extends 'Masterindex.html'%}
+{% load static %}
+{%  block navbar  %}
+<div class="container-fluid position-relative p-0">
+    <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
+        <a href="" class="navbar-brand p-0">
+            <h1 class="text-primary m-0"><i class="fa fa-map-marker-alt me-3"></i>Murli Tailor</h1>
+            <!-- <img src="img/logo.png" alt="Logo"> -->
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="fa fa-bars"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto py-0">
+                <a href="{{curl}}TailorApp/tailorhome" class="nav-item nav-link active">Home</a>
+                <!-- <a href="about.html" class="nav-item nav-link">About</a> -->
+                <a href="{{curl}}TailorApp/editsdeatils" class="nav-item nav-link">Due Set</a>
+               
+                
+                <a href="{{curl}}TailorApp/upgradeprogress" class="nav-item nav-link">Update Progress</a>  
+                <a href="{{curl}}TailorApp/searching" class="nav-item nav-link">Searching Custumer</a>
+            </div>
+            <a href="{{curl}}TailorApp/changepassword" class="btn btn-primary rounded-pill py-2 px-4">Settings</a> &nbsp; &nbsp;
+            <a href="{{curl}}login" class="btn btn-primary rounded-pill py-2 px-4">Log Out</a>
+        </div>
+    </nav>
+
+    <div class="container-fluid bg-primary py-5 mb-5 hero-header">
+        <div class="container py-5">
+            <div class="row justify-content-center py-5">
+                <div class="col-lg-10 pt-lg-5 mt-lg-5 text-center">
+                    <h1 class="display-3 text-white mb-3 animated slideInDown">DUE AMOUNT DETAILS</h1>
+                    <p class="fs-4 text-white mb-4 animated slideInDown">SEARCH BY CUSTUMER ID</details></p>
+                    <form  method="post"  action="" novalidate >
+                        {% csrf_token %}
+                    <div class="position-relative w-75 mx-auto animated slideInDown">
+                         <input class="form-control border-0 rounded-pill w-100 py-3 ps-4 pe-5" name="searchid" type="text" placeholder="Id: 101">
+                        <button type="submit" name="search" class="btn btn-primary rounded-pill py-2 px-4 position-absolute top-0 end-0 me-2" style="margin-top: 7px;">Search</button> 
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%  endblock navbar %}
+
+
+{%  block about %}  
+<a class="btn btn-primary py-3 px-5 mt-2" style=" margin-left: 90%;" href="{{curl}}TailorApp/tailorhome">Home</a>
+{%  endblock about %}
+{% comment %} {%  block service %}
+{% for x in context %}
+    <h6 class="section-title bg-white text-center text-primary px-3">Custumer name = {{ x.Custumer_name }}</h6>
+    <h6 class="section-title bg-white text-center text-primary px-3">Custumer ID = {{ x.Custumerid}}</h6>
+    <h6 class="section-title bg-white text-center text-primary px-3">Custumer Mobile = {{ x.Custumer_mobile}}</h6>
+    <br>
+{% endfor %}
+{% for y in context2 %}
+    <h6 class="section-title bg-white text-center text-primary px-3">Custumer due date= {{ y.date }}</h6>
+    <h6 class="section-title bg-white text-center text-primary px-3">Due settle date = {{ y.dob}}</h6>
+    <h6 class="section-title bg-white text-center text-primary px-3">Due_amount= {{ y.Due_amount}}</h6>
+    <br>
+{% endfor %}
+{%  endblock service %} {% endcomment %}
+
+{% block service %}
+<div class="container-xxl py-5">
+    <div class="container">
+        {% if context %}
+        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+            <h6 class="section-title bg-white text-center text-primary px-3 d-inline-block">Customer Information</h6>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-12 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="table-responsive">
+                    
+                    <table class="table table-bordered">
+                        <tbody>
+                            {% for x in context %}
+                                <tr>
+                                    <th scope="row" style="width: 30%;">Customer Name</th>
+                                    <td>{{ x.Custumer_name }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Customer ID</th>
+                                    <td>{{ x.Custumerid }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Customer Mobile</th>
+                                    <td>{{ x.Custumer_mobile }}</td>
+                                </tr>
+                            
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                   
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <p class="text-muted">No order details found. Please check the Customer ID and try again.</p>
+        {% endif %}  
+    </div>
+</div>
+
+<div class="container-xxl py-5">
+    <div class="container">
+        {% if context2 %}
+        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+            <h6 class="section-title bg-white text-center text-primary px-3 d-inline-block">Due Details</h6>
+        </div>
+        <div class="row g-4">
+            <div class="col-12 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="table-responsive">
+                    
+                    <table class="table table-bordered">
+                        <tbody>
+                            {% for y in context2 %}
+                                <tr>
+                                    <th scope="row" style="width: 30%;">Due Date</th>
+                                    <td>{{ y.date }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Due Settle Date</th>
+                                    <td>{{ y.dob }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Due Amount</th>
+                                    <td>{{ y.Due_amount }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <p class="text-muted">This custumer have not remain due Please check the Customer ID and try again.</p>
+        {% endif %}  
+    </div>
+</div>
+{% endblock service %}
+
+{% block destination %}
+    
+{% endblock destination %}
+{% block package %}
+
+
+{% endblock package %}
+{{msg}}
+<h4>{{msg}}</h4>
+{% block booking %}
+<div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="container">
+        <div class="booking p-5">
+            <div class="row g-5 align-items-center">
+                <!-- <div class="col-md-6 text-white">
+                    <h6 class="text-white text-uppercase">Booking</h6>
+                    <h1 class="text-white mb-4">Online Booking</h1>
+                    <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit.</p>
+                    <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
+                    <a class="btn btn-outline-light py-3 px-5 mt-2" href="">Read More</a>
+                </div> -->
+
+                <div class="col-md-6">
+                    <h1 class="text-white mb-4">{{msg}}</h1>
+                    {{msg}}
+                        
+                     
+            
+                        <form method="post" action="" novalidate>
+                            {% csrf_token %}
+                            {{msg}}
+                            <div class="table-responsive">
+                                <table class="table table-borderless text-white">
+                                    {{ form1.as_table }}
+                                </table>
+                            </div>
+                        
+                        <br>
+                        <div class="col-12">
+                            <button class="btn btn-outline-light w-75 py-3" name="save" type="submit">Summit</button>
+                            <br>
+                            <br>
+
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+{% endblock booking %}
+
+{% block process %}
+{% endblock process %}
+{% block team %}
+{% endblock team %}
+
+
+{% block testimonial %}
+{% endblock testimonial %}
+{% block footer %}
+{% endblock footer %}
