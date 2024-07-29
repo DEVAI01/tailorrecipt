@@ -25,7 +25,7 @@ class Addcustumer(models.Model):
     Custumer_mobile=models.CharField(max_length=100)
     Delivery_date = models.DateField()
     Update=models.CharField(default="NOT UPDATED",max_length=100)
-    Serial_no = models.CharField(max_length=20 ,unique=True)
+    Serial_no = models.CharField(max_length=200 ,unique=True)
     Current_date= models.DateTimeField('date published', default=timezone.now)
     Emailid=models.CharField(max_length=50)
     def save(self, *args, **kwargs):

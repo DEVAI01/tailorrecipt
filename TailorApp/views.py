@@ -5,7 +5,7 @@ from tailorrecipt.models import User,Addcustumer,Lowerdetsils,Upperdetsils,Payme
 from tailorrecipt import settings
 from .form import AddCustumer,due
 from django.template.loader import render_to_string
-from utils.twilio_utils  import send_whatsapp_message
+
 from reportlab.lib import colors
 from django.db.models.expressions import RawSQL
 from django.core.files.storage import FileSystemStorage
@@ -61,12 +61,14 @@ def tailorhome(request):
             Serial_no=fm.cleaned_data['Serial_no']
             Emailid=fm.cleaned_data['Emailid']
             Userid=1
+            
+            print(Custumername,Deliverydate,Custumermobile,Serial_no,Emailid,Userid)
             data=Addcustumer(Custumer_name=Custumername,Emailid=Emailid,Custumer_mobile=Custumermobile,Delivery_date=Deliverydate,Serial_no=Serial_no,Tailorid_id=Userid)
             try:
                 data.save()
                 msg="custumer register succesfully"
-            except:
-                msg="custumer not register"
+            except Exception as e:
+                msg = f"Customer not registered. Error: {str(e)}"
             print(msg)
             return redirect(curl+'TailorApp/tailorhome',{"form":fm,'msg':msg})
     return render(request,'Tailorhome.html',{'curl':curl ,'form':fm,'msg':msg})
@@ -189,14 +191,15 @@ def invoice(request):
         styles.add(ParagraphStyle(name='Terms', fontSize=10, leading=12, textColor=colors.grey))
 
         # Add company details
-        elements.append(Paragraph("Artfullstiches", styles['Company']))
+        elements.append(Paragraph("Murlitailor", styles['Company']))
         elements.append(Paragraph("Email: Artfullstiches@gmail.com", styles['CustomNormal']))
         elements.append(Paragraph("Mobile Number: 9171809182", styles['CustomNormal']))
         elements.append(Paragraph("Address: Vijay Nagar, Indore", styles['CustomNormal']))
         elements.append(Spacer(1, 12))
 
         # Add invoice title and customer details
-        elements.append(Paragraph(f"Invoice for: {latest_customer.Custumer_name} (Serial Number: {latest_customer.Custumerid})", styles['CustomTitle']))
+        elements.append(Paragraph(f"Invoice for: {latest_customer.Custumer_name} (Serial Number: {latest_customer.Custumerid})", styles['Company']))
+        elements.append(Spacer(1, 8))
         current_date_time = timezone.now().strftime("%Y-%m-%d %H:%M:%S")
         elements.append(Paragraph(f"Mobile Number: {latest_customer.Custumer_mobile}", styles['CustomNormal']))
         elements.append(Paragraph(f"Current Date: {current_date_time}", styles['CustomNormal']))
@@ -289,8 +292,8 @@ def invoice(request):
             f.write(pdf)
 
         # Send the PDF via email
-        email_subject = "Your Invoice from Murli tailor shop"
-        email_body = f"Dear {latest_customer.Custumer_name},\n\nPlease find attached your invoice.\n\n You can track you cloth updated in murli tailor  website\n\nBest regards,\nArtfullstiches"
+        email_subject = "Your Invoice from Murliailor"
+        email_body = f"Dear {latest_customer.Custumer_name},\n\nThis is invoice of your clothes from murlitalor.shop.\n\n You can track you cloth updated in murli tailor  website\n\nBest regards,\nArtfullstiches"
         sendMail.sendMail(latest_customer.Emailid, subject=email_subject, html=email_body, attachment_path=pdf_path, attachment_name=f"invoice_{latest_customer.Custumerid}.pdf")
 
         response = HttpResponse(pdf, content_type='application/pdf')
@@ -910,14 +913,15 @@ def idinvoice(request):
         styles.add(ParagraphStyle(name='Terms', fontSize=10, leading=12, textColor=colors.grey))
 
         # Add company details
-        elements.append(Paragraph("Artfullstiches", styles['Company']))
-        elements.append(Paragraph("Email: Artfullstiches@gmail.com", styles['CustomNormal']))
+        elements.append(Paragraph("Murli tailor", styles['Company']))
+        elements.append(Paragraph("Email: Murlitailor@gmail.com", styles['CustomNormal']))
         elements.append(Paragraph("Mobile Number: 9171809182", styles['CustomNormal']))
-        elements.append(Paragraph("Address: Vijay Nagar, Indore", styles['CustomNormal']))
+        elements.append(Paragraph("Address: khardon kalan shajapur, M.P", styles['CustomNormal']))
         elements.append(Spacer(1, 12))
 
         # Add invoice title and customer details
-        elements.append(Paragraph(f"Invoice for: {latest_customer.Custumer_name} (Serial Number: {latest_customer.Custumerid})", styles['CustomTitle']))
+        elements.append(Paragraph(f"Invoice for: {latest_customer.Custumer_name} (Serial Number: {latest_customer.Custumerid})", styles['Company']))
+        elements.append(Spacer(1, 5))
         current_date_time = timezone.now().strftime("%Y-%m-%d %H:%M:%S")
         elements.append(Paragraph(f"Mobile Number: {latest_customer.Custumer_mobile}", styles['CustomNormal']))
         elements.append(Paragraph(f"Current Date: {current_date_time}", styles['CustomNormal']))
@@ -1010,8 +1014,8 @@ def idinvoice(request):
             f.write(pdf)
 
         # Send the PDF via email
-        email_subject = "Your Invoice from Artfullstiches"
-        email_body = f"Dear {latest_customer.Custumer_name},\n\nPlease find attached your invoice.\n\nBest regards,\nArtfullstiches"
+        email_subject = "Your Invoice from Murlitailor"
+        email_body = f"Dear {latest_customer.Custumer_name},\n\n This is invoice of your clothes from murlitalor.shop.\n\nBest regards,\nArtfullstiches"
         sendMail.sendMail(latest_customer.Emailid, subject=email_subject, html=email_body, attachment_path=pdf_path, attachment_name=f"invoice_{latest_customer.Custumerid}.pdf")
 
         response = HttpResponse(pdf, content_type='application/pdf')

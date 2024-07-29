@@ -5,7 +5,7 @@
 {% block navbar %}
 <div class="container-fluid position-relative p-0">
     <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
-        <a href="" class="navbar-brand p-0">
+        <a href="https://www.google.com/maps/place/Murli+Tailors/@23.4668545,76.9696363,39m/data=!3m1!1e3!4m6!3m5!1s0x397c9bf985813ecb:0x6c8c6eb0b1bd951b!8m2!3d23.466956!4d76.9696231!16s%2Fg%2F11tk1yvnb2?entry=ttu" class="navbar-brand p-0">
             <h1 class="text-primary m-0"><i class="fa fa-map-marker-alt me-3"></i>Murli Tailor</h1>
             <!-- <img src="img/logo.png" alt="Logo"> -->
         </a>
@@ -45,64 +45,99 @@
 {% endblock navbar %}
 
 {% block about %}
-<div class="container-xxl py-5">
-    <div class="container">
-        <div class="row g-5">
-            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s" style="min-height: 400px;">
-                <div class="position-relative h-100">
-                    <img class="img-fluid position-absolute w-100 h-100" src="{% static 'img/machine-3.jpg' %}" alt="Stitching Machine" style="object-fit: cover;">
-                </div>
-            </div>
-            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
-                <h6 class="section-title bg-white text-start text-primary pe-3">Order Details</h6>
-                <h1 class="mb-4">Welcome <span class="text-primary">Customer</span></h1>
-                <p class="mb-4">Thank you for visiting. Below are your order details:</p>
-
-                {% if context %}
-                    <table class="table table-bordered">
-                        <tbody>
-                            {% for x in context %}
-                                <tr>
-                                    <th scope="row">Customer Name</th>
-                                    <td>{{ x.Custumer_name }}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Customer ID</th>
-                                    <td>{{ x.Custumerid }}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Mobile</th>
-                                    <td>{{ x.Custumer_mobile }}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Current Date</th>
-                                    <td>{{ x.Current_date }}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Delivery Date</th>
-                                    <td>{{ x.Delivery_date }}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Status</th>
-                                    <td>{{ x.Update }}</td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                {% else %}
-                    <p class="text-muted">No order details found. Please check the Customer ID and try again.</p>
-                {% endif %}
-                
-                <div class="row gy-2 gx-4 mb-4">
-                    <div class="col-sm-12">
-                        <p class="mb-0"><i class="fa fa-info-circle text-primary me-2"></i>If you need any further information, please <a href="{{ curl }}contact" class="text-primary">contact us</a>.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}"> <!-- Adjust path as needed -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wowjs/1.1.2/wow.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Add any custom CSS styles here */
+    </style>
+</head>
+<body>
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s" style="min-height: 400px;">
+                    <div class="position-relative h-100">
+                        <img class="img-fluid position-absolute w-100 h-100" src="{% static 'img/machine-3.jpg' %}" alt="Stitching Machine" style="object-fit: cover;">
                     </div>
                 </div>
-                <a class="btn btn-primary py-3 px-5 mt-2" href="{{ curl }}contact">Contact Us</a>
+                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
+                    <h6 class="section-title bg-white text-start text-primary pe-3">Order Details</h6>
+                    <h1 class="mb-4">Welcome <span class="text-primary">Customer</span></h1>
+                    <p class="mb-4">Thank you for visiting. Below are your order details:</p>
+
+                    {% if context %}
+                        <table class="table table-bordered">
+                            <tbody>
+                                {% for x in context %}
+                                    <tr>
+                                        <th scope="row">Customer Name</th>
+                                        <td>{{ x.Custumer_name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Customer ID</th>
+                                        <td>{{ x.Custumerid }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Mobile</th>
+                                        <td class="mobile-number">{{ x.Custumer_mobile }}</td>
+                                        <th class="security-message">Number hidden due to security reasons.</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Current Date</th>
+                                        <td>{{ x.Current_date }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Delivery Date</th>
+                                        <td>{{ x.Delivery_date }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Status</th>
+                                        <td>{{ x.Update }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p class="text-muted">No order details found. Please check the Customer ID and try again.</p>
+                    {% endif %}
+                    
+                    <div class="row gy-2 gx-4 mb-4">
+                        <div class="col-sm-12">
+                            <p class="mb-0"><i class="fa fa-info-circle text-primary me-2"></i>If you need any further information, please <a href="{{ curl }}contact" class="text-primary">contact us</a>.</p>
+                        </div>
+                    </div>
+                    <a class="btn btn-primary py-3 px-5 mt-2" href="{{ curl }}contact">Contact Us</a>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get all elements with class 'mobile-number'
+        const mobileNumbers = document.querySelectorAll('.mobile-number');
+        
+        // Iterate through each mobile number element
+        mobileNumbers.forEach(function(element) {
+            const number = element.textContent.trim();
+            
+            if (number.length >= 4) {
+                // Mask the number and update the content
+                element.textContent = `${number.slice(0, 2)}******${number.slice(-2)}`;
+            }
+        });
+    });
+    </script>
+</body>
+</html>
+
 {% endblock about %}
 
 {%  block service %}

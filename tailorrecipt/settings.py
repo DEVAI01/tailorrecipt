@@ -16,7 +16,7 @@ USE_TZ = True
 
 from pathlib import Path
 import os
-from twilio.rest import Client
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -150,3 +150,5 @@ CURRENT_URL= 'http://localhost:8000/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL='/media/'
 MEDIA_ROOT=os.path.join(BASE_DIR,'media')
+
+

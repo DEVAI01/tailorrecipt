@@ -4,7 +4,7 @@ from django.shortcuts import render,redirect
 from tailorrecipt import models
 from .forms import UserLogin,UserRegister
 from . import emailSending
-
+from django.db import IntegrityError
 from .models import User,Addcustumer,Upperdetsils,Lowerdetsils,Paymentdetails
 
 
@@ -93,13 +93,24 @@ def register(request):
             dob = fm.cleaned_data['dob']
             Userobj = User(name=name,email=email,password=password,mobile=mobile,gender=gender,dob=dob)
             # for send verification email to registered email id
-            emailSending.sendMail(email, password)
+            
             try:
-               Userobj.save()
-               msg="User Register Successfully"
+                Userobj.save()
+                msg = "User Registered Successfully"
+                emailSending.sendMail(email, password)
+            except IntegrityError as e:
+                # Check for duplicate entry error
+                if '1062' in str(e).split(' ')[0]:
+                        msg = "This email address is already registered. Please use a different email."
+                else:
+                    # Log other integrity errors
+                    print(f"IntegrityError occurred: {e}")
+                    msg = "User Registration Failed due to an integrity error."
+            except Exception as e:
+                # Handle other unexpected exceptions
+                print(f"An unexpected error occurred: {e}")
+                msg = "User Registration Failed."
                
-            except:
-               msg="User Not Register"    
         return render(request,"Register.html",{"curl":curl,"msg":msg,'form':fm})
     elif request.method == "GET":
         return render(request,"Register.html",{"curl":curl,'form':fm})
