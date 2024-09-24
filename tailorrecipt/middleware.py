@@ -31,10 +31,13 @@ class LoginRequiredMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        # URLs that don't require login
-        open_urls = [reverse('login'), reverse('register'), reverse('index'), reverse('logout')]
+        # URLs that don't require login (including all tailorrecipt pages)
+        open_paths = ['/login/', '/register/', '/logout/', '/service/', '/contact/', '/search/', '/']
+        
+        # Check if the path starts with /TailorApp/ or /CustumerApp/
+        is_protected_path = request.path.startswith('/TailorApp/') or request.path.startswith('/CustumerApp/')
 
-        if not request.session.get('email') and request.path not in open_urls:
+        if is_protected_path and not request.session.get('email'):
             params = urlencode({'next': request.get_full_path()})
             return redirect(f"{reverse('login')}?{params}")
 
