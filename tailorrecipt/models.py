@@ -19,7 +19,7 @@ class User(models.Model):
         return "{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7},{8},{9}".format( self.userid,self.name, self.email, self.password, self.mobile,self.gender,self.dob,self.date,self.status,self.role)
     
 class Addcustumer(models.Model):
-    Tailorid=models.ForeignKey(User,on_delete=models.CASCADE)
+    Tailorid=models.IntegerField(default=1)
     Custumerid=models.AutoField(primary_key=True)
     Custumer_name=models.CharField(max_length=100)
     Custumer_mobile=models.CharField(max_length=100)

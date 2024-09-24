@@ -101,10 +101,10 @@ def tailorhome(request):
             Deliverydate=fm.cleaned_data['deliverdate']
             Serial_no=fm.cleaned_data['Serial_no']
             Emailid=fm.cleaned_data['Emailid']
-            Userid=1
             
-            print(Custumername,Deliverydate,Custumermobile,Serial_no,Emailid,Userid)
-            data=Addcustumer(Custumer_name=Custumername,Emailid=Emailid,Custumer_mobile=Custumermobile,Delivery_date=Deliverydate,Serial_no=Serial_no,Tailorid_id=Userid)
+            
+            print(Custumername,Deliverydate,Custumermobile,Serial_no,Emailid)
+            data=Addcustumer(Custumer_name=Custumername,Emailid=Emailid,Custumer_mobile=Custumermobile,Delivery_date=Deliverydate,Serial_no=Serial_no)
             try:
                 data.save()
                 msg="custumer register succesfully"
