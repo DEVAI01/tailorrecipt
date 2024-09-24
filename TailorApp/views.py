@@ -46,6 +46,7 @@ media_url=settings.MEDIA_URL
 from PIL import Image
 import io
 from django.core.files.storage import FileSystemStorage
+import os
 
 def resize_and_compress_image(image_file, target_size_kb=50, resize_factor=0.9, quality=75):
     """
@@ -59,7 +60,12 @@ def resize_and_compress_image(image_file, target_size_kb=50, resize_factor=0.9, 
     """
     # Open the uploaded image
     img = Image.open(image_file)
-    
+
+    # Convert RGBA to RGB if necessary
+    if img.mode == 'RGBA':
+        # Create a new image with a white background
+        img = img.convert('RGB')
+
     # Resize the image to reduce dimensions
     img = img.resize((800, 600), Image.LANCZOS)  # Initial resize, adjust dimensions as needed
     
@@ -81,6 +87,7 @@ def resize_and_compress_image(image_file, target_size_kb=50, resize_factor=0.9, 
     image_path = fs.url(filename)
     relative_image_path = os.path.basename(image_path)
     return relative_image_path
+
 
 from django.urls import reverse
 
@@ -1125,6 +1132,7 @@ def idinvoice(request):
 def custumerlist(request):
     msg=''
     customers =Addcustumer.objects.all()
+    print(customers)
     return render(request,'Custumerlist.html',{'curl':curl,'msg':msg,'customers':customers})
 
 def deletedue(request):
