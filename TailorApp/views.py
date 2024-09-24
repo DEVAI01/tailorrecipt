@@ -43,6 +43,47 @@ media_url=settings.MEDIA_URL
 
 
 
+from PIL import Image
+import io
+from django.core.files.storage import FileSystemStorage
+
+def resize_and_compress_image(image_file, target_size_kb=50, resize_factor=0.9, quality=75):
+    """
+    Resize and compress the image to ensure it is under the target size in kilobytes.
+    
+    :param image_file: Uploaded image file
+    :param target_size_kb: Target size in kilobytes
+    :param resize_factor: Factor by which to reduce the image dimensions
+    :param quality: JPEG quality parameter
+    :return: Path of the saved image
+    """
+    # Open the uploaded image
+    img = Image.open(image_file)
+    
+    # Resize the image to reduce dimensions
+    img = img.resize((800, 600), Image.LANCZOS)  # Initial resize, adjust dimensions as needed
+    
+    # Save to a BytesIO object with JPEG compression
+    image_io = io.BytesIO()
+    img.save(image_io, format='JPEG', quality=quality)
+    
+    # Ensure the image is compressed enough
+    while len(image_io.getvalue()) / 1024 > target_size_kb:  # Target size in KB
+        img = img.resize((int(img.width * resize_factor), int(img.height * resize_factor)), Image.LANCZOS)
+        image_io = io.BytesIO()
+        img.save(image_io, format='JPEG', quality=quality)
+    
+    image_io.seek(0)
+    
+    # Save the image to the filesystem
+    fs = FileSystemStorage()
+    filename = fs.save(image_file.name, image_io)
+    image_path = fs.url(filename)
+    relative_image_path = os.path.basename(image_path)
+    return relative_image_path
+
+from django.urls import reverse
+
 def tailorhome(request):
     msg=""
     fm = AddCustumer()
@@ -71,7 +112,7 @@ def tailorhome(request):
                 msg = f"Customer not registered. Error: {str(e)}"
             print(msg)
             return redirect(curl+'TailorApp/tailorhome',{"form":fm,'msg':msg})
-    return render(request,'Tailorhome.html',{'curl':curl ,'form':fm,'msg':msg})
+    return render(request,'Tailorhome.html',{'curl':curl ,'form':fm,'msg':msg,'logout_url': reverse('logout')})
     # elif request.method == "GET":
     #     return render(request,'Tailorhome.html',{'curl':curl ,'msg':msg,'form':fm})
     
@@ -105,10 +146,10 @@ def coupleclothes(request):
         firstmessage=request.POST.get('firstmessage')
 
         firstimageicon=request.FILES['firstimageicon']
-        fs=FileSystemStorage()
-        fs.save(firstimageicon.name,firstimageicon)
         
-        
+        if firstmessage:
+            # Resize and compress the image
+            firstmessage = resize_and_compress_image(firstmessage)
         
     
         seconditem=request.POST.get('seconditem') 
@@ -124,9 +165,12 @@ def coupleclothes(request):
         other=request.POST.get('other')
         secondmessage=request.POST.get('secondmessage')
         secondimageicon=request.FILES['secondimageicon']
-        fs=FileSystemStorage()
-        fs.save(secondimageicon.name,secondimageicon)  
-    
+        
+       
+        if secondimageicon:
+            # Resize and compress the image
+            secondimageicon = resize_and_compress_image(secondimageicon)
+            
         totalamount=request.POST.get('totalAmount')
         advanceamount=request.POST.get('advancedAmount')
         dueamount=request.POST.get('dueAmount')
@@ -330,8 +374,9 @@ def doublecoupleclothes(request):
         firstmessage=request.POST.get('firstmessage')
 
         firstimageicon=request.FILES['firstimageicon']
-        fs=FileSystemStorage()
-        fs.save(firstimageicon.name,firstimageicon)
+        if firstmessage:
+            # Resize and compress the image
+            firstmessage = resize_and_compress_image(firstmessage)
         
         
         
@@ -349,8 +394,9 @@ def doublecoupleclothes(request):
         other=request.POST.get('other')
         secondmessage=request.POST.get('secondmessage')
         secondimageicon=request.FILES['secondimageicon']
-        fs=FileSystemStorage()
-        fs.save(secondimageicon.name,secondimageicon)  
+        if secondimageicon:
+            # Resize and compress the image
+            secondimageicon = resize_and_compress_image(secondimageicon)
     
         totalamount=request.POST.get('totalAmount')
         advanceamount=request.POST.get('advancedAmount')
@@ -390,8 +436,9 @@ def doublecoupleclothes(request):
         firstmessagetwo=request.POST.get('firstmessagetwo')
 
         firstimageicontwo=request.FILES['firstimageicontwo']
-        fs=FileSystemStorage()
-        fs.save(firstimageicontwo.name,firstimageicontwo)
+        if firstimageicontwo:
+            # Resize and compress the image
+            firstimageicontwo = resize_and_compress_image(firstimageicontwo)
         
         
         
@@ -409,8 +456,9 @@ def doublecoupleclothes(request):
         otherthree=request.POST.get('otherthree')
         secondmessagethree=request.POST.get('secondmessagethree')
         secondimageiconthree=request.FILES['secondimageiconthree']
-        fs=FileSystemStorage()
-        fs.save(secondimageiconthree.name,secondimageiconthree)  
+        if secondimageiconthree:
+            # Resize and compress the image
+            secondimageiconthree = resize_and_compress_image(secondimageiconthree)
     
         totalamount=request.POST.get('totalAmount')
         advanceamount=request.POST.get('advancedAmount')
@@ -448,50 +496,102 @@ def doublecoupleclothes(request):
     return render(request,'Doublecoupleclothes.html',{'curl':curl,'context':obj})    
         
 
+
+
+
+
+
 def uppersinglecloth(request):
-    obj=Addcustumer.objects.raw('SELECT * FROM tailorrecipt_addcustumer ORDER BY Custumerid DESC LIMIT 1')
-        
-    msg=""
+    obj = Addcustumer.objects.raw('SELECT * FROM tailorrecipt_addcustumer ORDER BY Custumerid DESC LIMIT 1')
+    msg = ""
     
-    if request.method=="POST":  
-        custumerid=request.POST.get('custumerid')
-        custumer_mobile=request.POST.get('custumermobile')
-        item=request.POST.get('item') 
-        quantity=request.POST.get('quantity')
-        frontlength=request.POST.get('frontlength')
-        shoulder=request.POST.get('shoulder')
-        chest=request.POST.get('chest')
-        wrist=request.POST.get('wrist')
-        hips=request.POST.get('hips')
-        sleeves=request.POST.get('sleeves')
-        biseps=request.POST.get('biseps')
-        cuff=request.POST.get('cuff')
-        callor=request.POST.get('callor')
-        message=request.POST.get('message')
-        totalamount=request.POST.get('totalAmount')
-        advanceamount=request.POST.get('advancedAmount')
-        dueamount=request.POST.get('dueAmount')
-        imageicon=request.FILES['imageicon']
-        fs=FileSystemStorage()
-        fs.save(imageicon.name,imageicon)  
+    if request.method == "POST":
+        custumerid = request.POST.get('custumerid')
+        custumer_mobile = request.POST.get('custumermobile')
+        item = request.POST.get('item')
+        quantity = request.POST.get('quantity')
+        frontlength = request.POST.get('frontlength')
+        shoulder = request.POST.get('shoulder')
+        chest = request.POST.get('chest')
+        wrist = request.POST.get('wrist')
+        hips = request.POST.get('hips')
+        sleeves = request.POST.get('sleeves')
+        biseps = request.POST.get('biseps')
+        cuff = request.POST.get('cuff')
+        callor = request.POST.get('callor')
+        message = request.POST.get('message')
+        totalamount = request.POST.get('totalAmount')
+        advanceamount = request.POST.get('advancedAmount')
+        dueamount = request.POST.get('dueAmount')
+        imageicon = request.FILES.get('imageicon')
         
-        print("uppercloth",custumer_mobile,item,quantity,frontlength,shoulder,chest,wrist,hips,sleeves,biseps,cuff,callor,message,imageicon,custumerid)
-        data=Upperdetsils(Item=item,Quantity=quantity,Frontlength=frontlength,Shoulder=shoulder,Chest=chest,Wrist=wrist,Hips=hips,Sleeves=sleeves,Biseps=biseps,Cuff=cuff,Callor=callor,Message=message,Imageicon=imageicon,Custumerid_id=custumerid)
-        payment=Paymentdetails(Totalamount=totalamount,Advanceamount=advanceamount,Dueamount=dueamount,Custumerid_id=custumerid)
-        print("paymentdetails",totalamount,advanceamount,dueamount,custumerid)
-        try:   
-            data.save()
-            payment.save()
-            msg="cloth details register succesfully"
-        except:
-            msg="cloth details not register"
+        if imageicon:
+            # Resize and compress the image
+            relative_image_path = resize_and_compress_image(imageicon)
+            
+            print("uppercloth", custumer_mobile, item, quantity, frontlength, shoulder, chest, wrist, hips, sleeves, biseps, cuff, callor, message, relative_image_path, custumerid)
+           
+            data = Upperdetsils(Item=item, Quantity=quantity, Frontlength=frontlength, Shoulder=shoulder, Chest=chest, Wrist=wrist, Hips=hips, Sleeves=sleeves, Biseps=biseps, Cuff=cuff, Callor=callor, Message=message, Imageicon=relative_image_path, Custumerid_id=custumerid)
+            payment = Paymentdetails(Totalamount=totalamount, Advanceamount=advanceamount, Dueamount=dueamount, Custumerid_id=custumerid)
+            print("paymentdetails", totalamount, advanceamount, dueamount, custumerid)
+            
+            try:
+                data.save()
+                payment.save()
+                msg = "cloth details registered successfully"
+            except Exception as e:
+                print("Error saving details:", e)
+                msg = "cloth details not registered"
+            
+            return redirect(curl + 'TailorApp/uppersinglecloth/' + f'?msg={msg}')
+    return render(request, 'Uppersinglecloth.html', {'curl': curl, 'context': obj})
+
+
+
+# def uppersinglecloth(request):
+#     obj=Addcustumer.objects.raw('SELECT * FROM tailorrecipt_addcustumer ORDER BY Custumerid DESC LIMIT 1')
+        
+#     msg=""
+    
+#     if request.method=="POST":  
+#         custumerid=request.POST.get('custumerid')
+#         custumer_mobile=request.POST.get('custumermobile')
+#         item=request.POST.get('item') 
+#         quantity=request.POST.get('quantity')
+#         frontlength=request.POST.get('frontlength')
+#         shoulder=request.POST.get('shoulder')
+#         chest=request.POST.get('chest')
+#         wrist=request.POST.get('wrist')
+#         hips=request.POST.get('hips')
+#         sleeves=request.POST.get('sleeves')
+#         biseps=request.POST.get('biseps')
+#         cuff=request.POST.get('cuff')
+#         callor=request.POST.get('callor')
+#         message=request.POST.get('message')
+#         totalamount=request.POST.get('totalAmount')
+#         advanceamount=request.POST.get('advancedAmount')
+#         dueamount=request.POST.get('dueAmount')
+#         imageicon=request.FILES['imageicon']
+#         fs=FileSystemStorage()
+#         fs.save(imageicon.name,imageicon)  
+        
+#         print("uppercloth",custumer_mobile,item,quantity,frontlength,shoulder,chest,wrist,hips,sleeves,biseps,cuff,callor,message,imageicon,custumerid)
+#         data=Upperdetsils(Item=item,Quantity=quantity,Frontlength=frontlength,Shoulder=shoulder,Chest=chest,Wrist=wrist,Hips=hips,Sleeves=sleeves,Biseps=biseps,Cuff=cuff,Callor=callor,Message=message,Imageicon=imageicon,Custumerid_id=custumerid)
+#         payment=Paymentdetails(Totalamount=totalamount,Advanceamount=advanceamount,Dueamount=dueamount,Custumerid_id=custumerid)
+#         print("paymentdetails",totalamount,advanceamount,dueamount,custumerid)
+#         try:   
+#             data.save()
+#             payment.save()
+#             msg="cloth details register succesfully"
+#         except:
+#             msg="cloth details not register"
                 
-        # custumermobile= "+91" + custumer_mobile
-        # print(custumermobile) 
+#         # custumermobile= "+91" + custumer_mobile
+#         # print(custumermobile) 
          
         
-        return redirect(curl+'TailorApp/uppersinglecloth/'+ f'?msg={msg}')
-    return render(request,'Uppersinglecloth.html',{'curl':curl,'context':obj}) 
+#         return redirect(curl+'TailorApp/uppersinglecloth/'+ f'?msg={msg}')
+#     return render(request,'Uppersinglecloth.html',{'curl':curl,'context':obj}) 
 
 # send_whatsapp_message(custumerid,custumermobile,item,totalamount,advanceamount,dueamount)  
 
@@ -519,8 +619,9 @@ def lowersinglecloth(request):
             dueamount=request.POST.get('dueAmount')
             
             imageicon=request.FILES['imageicon']
-            fs=FileSystemStorage()
-            fs.save(imageicon.name,imageicon)  
+            if imageicon:
+            
+                imageicon= resize_and_compress_image(imageicon)
             
             
             print(custumerid,item,quantity,fulllength,waist,hips,thigh,rise,knee,uplegoppening,legoppening,other,message,imageicon)
@@ -571,9 +672,8 @@ def tripleclothes(request):
         firstmessage=request.POST.get('firstmessage')
 
         firstimageicon=request.FILES['firstimageicon']
-        fs=FileSystemStorage()
-        fs.save(firstimageicon.name,firstimageicon)
-        
+        if firstimageicon:
+            firstimageicon= resize_and_compress_image(firstimageicon)
         
         
     
@@ -590,8 +690,8 @@ def tripleclothes(request):
         other=request.POST.get('other')
         secondmessage=request.POST.get('secondmessage')
         secondimageicon=request.FILES['secondimageicon']
-        fs=FileSystemStorage()
-        fs.save(secondimageicon.name,secondimageicon)  
+        if secondimageicon:
+            secondimageicon= resize_and_compress_image(secondimageicon)
     
         
             
@@ -629,8 +729,8 @@ def tripleclothes(request):
         firstmessagetwo=request.POST.get('firstmessagetwo')
 
         firstimageicontwo=request.FILES['firstimageicontwo']
-        fs=FileSystemStorage()
-        fs.save(firstimageicontwo.name,firstimageicontwo)
+        if firstimageicontwo:
+            firstimageicontwo= resize_and_compress_image(firstimageicontwo)
         
         
         
@@ -648,9 +748,9 @@ def tripleclothes(request):
         otherthree=request.POST.get('otherthree')
         secondmessagethree=request.POST.get('secondmessagethree')
         secondimageiconthree=request.FILES['secondimageiconthree']
-        fs=FileSystemStorage()
-        fs.save(secondimageiconthree.name,secondimageiconthree)  
-    
+        if secondimageiconthree:
+            secondimageiconthree= resize_and_compress_image(secondimageiconthree)
+        
     
             
         print("uppercloth",firstitemtwo,firstquantitytwo,frontlengthtwo,shouldertwo,chesttwo,wristtwo,hipstwo,sleevestwo,bisepstwo,cufftwo,callortwo,firstmessagetwo,firstimageicontwo,custumerid)
@@ -686,8 +786,8 @@ def tripleclothes(request):
         firstmessagefour=request.POST.get('firstmessagefour')
 
         firstimageiconfour=request.FILES['firstimageiconfour']
-        fs=FileSystemStorage()
-        fs.save(firstimageiconfour.name,firstimageiconfour)
+        if firstimageiconfour:
+            firstimageiconfour= resize_and_compress_image(firstimageiconfour)
         
         
         
@@ -705,8 +805,8 @@ def tripleclothes(request):
         otherfive=request.POST.get('otherfive')
         secondmessagefive=request.POST.get('secondmessagefive')
         secondimageiconfive=request.FILES['secondimageiconfive']
-        fs=FileSystemStorage()
-        fs.save(secondimageiconfive.name,secondimageiconfive)  
+        if secondimageiconfive:
+            secondimageiconfive= resize_and_compress_image(secondimageiconfive)
     
         totalamount=request.POST.get('totalAmount')
         advanceamount=request.POST.get('advancedAmount')
@@ -821,13 +921,8 @@ def changepassword(request):
         print(msg)
     return render(request,'ChangePassword.html',{'curl':curl,'msg':msg})
 
-from django.contrib.auth import logout
 
-def logout(request):
-    logout(request)  
-    return render(request,'LogOut.html',{'curl':curl})
-    
-    
+
 def user(request):
     msg=""
     if request.method=="POST":
@@ -1135,5 +1230,19 @@ def filter(request):
 
     return render(request, 'Filter.html', {'curl':curl,'msg': msg, 'customers': customers, 'start_date': start_date, 'end_date': end_date})
 
+
+
+def some_protected_view(request):
+    if 'email' not in request.session:
+        return redirect('login')
+    # ... rest of your view code ...
+    
+from django.contrib.auth import logout as auth_logout
+from django.shortcuts import redirect
+
+def logout(request):
+    auth_logout(request)
+    request.session.flush()
+    return redirect('login')
 
 

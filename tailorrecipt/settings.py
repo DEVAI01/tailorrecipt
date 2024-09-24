@@ -80,28 +80,29 @@ TEMPLATES = [
 WSGI_APPLICATION = 'tailorrecipt.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
+#local
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'naveen',
+#         'USER': 'root',
+#         'PASSWORD': '1234',
+#         'HOST': 'localhost',  # Or your MySQL server's IP address
+#         'PORT': '3306',
 #     }
 # }
 
-
+#production data base
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'naveen',
-        'USER': 'root',
-        'PASSWORD': '1234',
+        'USER': 'myuser',
+        'PASSWORD': 'naveen1211',
         'HOST': 'localhost',  # Or your MySQL server's IP address
         'PORT': '3306',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -136,13 +137,40 @@ USE_L10N = True
 
 USE_TZ = True
 
+# #local
+# # Static files (CSS, JavaScript, Images)
+# # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.2/howto/static-files/
+# STATIC_URL = '/static/'
+# CURRENT_URL= 'http://localhost:8000/'
 
+
+# # Default primary key field type
+# # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
+
+# DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# MEDIA_URL='/media/'
+# MEDIA_ROOT=os.path.join(BASE_DIR,'media')
+
+
+#proudction 
+
+ALLOWED_HOSTS = ['murlitailor.shop', 'www.murlitailor.shop']
+
+#ALLOWED_HOSTS = ['3.95.185.94']
+CURRENT_URL = 'https://murlitailor.shop/' 
+# Static files settings
 STATIC_URL = '/static/'
-CURRENT_URL= 'http://localhost:8000/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'tailorrecipt', 'static'),
+]
+
+# Media files settings
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -150,5 +178,4 @@ CURRENT_URL= 'http://localhost:8000/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL='/media/'
 MEDIA_ROOT=os.path.join(BASE_DIR,'media')
-
 

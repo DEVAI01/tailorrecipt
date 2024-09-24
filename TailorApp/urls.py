@@ -3,9 +3,12 @@ from . import views
 from django.conf.urls.static import static
 from .views import invoice
 # Create your views here.
+
+app_name = 'TailorApp' 
+
 urlpatterns=[
 
-    path('tailorhome/',views.tailorhome),
+    path('tailorhome/',views.tailorhome,name='tailorhome'),
     path('editsdeatils/',views.editsdeatils),
     path('upgradeprogress/',views.upgradeprogress),
     path('searching/',views.searching),
