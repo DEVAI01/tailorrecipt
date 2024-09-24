@@ -154,9 +154,9 @@ def coupleclothes(request):
 
         firstimageicon=request.FILES['firstimageicon']
         
-        if firstmessage:
+        if firstimageicon:
             # Resize and compress the image
-            firstmessage = resize_and_compress_image(firstmessage)
+            firstimageicon = resize_and_compress_image(firstimageicon)
         
     
         seconditem=request.POST.get('seconditem') 
@@ -381,9 +381,9 @@ def doublecoupleclothes(request):
         firstmessage=request.POST.get('firstmessage')
 
         firstimageicon=request.FILES['firstimageicon']
-        if firstmessage:
+        if firstimageicon:
             # Resize and compress the image
-            firstmessage = resize_and_compress_image(firstmessage)
+            firstimageicon = resize_and_compress_image(firstimageicon)
         
         
         
