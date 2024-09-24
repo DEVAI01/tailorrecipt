@@ -1,7 +1,6 @@
-{%  extends 'Masterindex.html'%}
+
+{%  extends 'Masterindex.html' %}
 {% load static %}
-
-
 
 
 
@@ -10,7 +9,7 @@
 {%  block navbar  %}
 <div class="container-fluid position-relative p-0">
     <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
-        <a href="" class="navbar-brand p-0">
+        <a href="https://www.google.com/maps/place/Murli+Tailors/@23.4668545,76.9696363,39m/data=!3m1!1e3!4m6!3m5!1s0x397c9bf985813ecb:0x6c8c6eb0b1bd951b!8m2!3d23.466956!4d76.9696231!16s%2Fg%2F11tk1yvnb2?entry=ttu" class="navbar-brand p-0">
             <h1 class="text-primary m-0"><i class="fa fa-map-marker-alt me-3"></i>Murli Tailor</h1>
             <!-- <img src="img/logo.png" alt="Logo"> -->
         </a>
@@ -19,14 +18,25 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto py-0">
-                <a href="{{curl}}CustumerApp/custumer" class="nav-item nav-link active">Home</a>
+                <a href="{{curl}}" class="nav-item nav-link active">Home</a>
                 <!-- <a href="about.html" class="nav-item nav-link">About</a> -->
-                <a href="{{curl}}CustumerApp/services" class="nav-item nav-link">Services</a>
-                <a href="{{curl}}CustumerApp/bookings" class="nav-item nav-link">Bookings</a>  
-                <a href="{{curl}}CustumerApp/chatus" class="nav-item nav-link">Chat Us</a>
+                <a href="{{curl}}service" class="nav-item nav-link">Services</a>
+                
+                 <!-- <div class="nav-item dropdown"> 
+                    <a href="{{curl}}pages" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a> 
+                     <div class="dropdown-menu m-0">
+                        <a href="destination.html" class="dropdown-item">Destination</a>
+                        <a href="booking.html" class="dropdown-item">Booking</a>
+                        <a href="team.html" class="dropdown-item">Travel Guides</a>
+                        <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                        <a href="404.html" class="dropdown-item">404 Page</a> 
+                    </div>
+                </div> -->
+                <a href="{{curl}}contact" class="nav-item nav-link">Contact</a>
+                <a href="{{curl}}search" class="nav-item nav-link">Search</a>
             </div>
-            <a href="{{curl}}CustumerApp/custumersettings" class="btn btn-primary rounded-pill py-2 px-4">Settings</a> &nbsp; &nbsp;
-            <a href="{{curl}}login" class="btn btn-primary rounded-pill py-2 px-4">Log Out</a>
+            <a href="{{curl}}login" class="btn btn-primary rounded-pill py-2 px-4">Login</a> &nbsp; &nbsp;
+            <a href="{{curl}}register" class="btn btn-primary rounded-pill py-2 px-4">Register</a>
         </div>
     </nav>
 
@@ -34,8 +44,8 @@
         <div class="container py-5">
             <div class="row justify-content-center py-5">
                 <div class="col-lg-10 pt-lg-5 mt-lg-5 text-center">
-                    <h1 class="display-3 text-white mb-3 animated slideInDown">Welcome Custumer</h1>
-                    <p class="fs-4 text-white mb-4 animated slideInDown">Services</p>
+                    <h1 class="display-3 text-white mb-3 animated slideInDown">Our Services</h1>
+                    <p class="fs-4 text-white mb-4 animated slideInDown">Welcome</p>
                     <div class="position-relative w-75 mx-auto animated slideInDown">
                         <!-- <input class="form-control border-0 rounded-pill w-100 py-3 ps-4 pe-5" type="text" placeholder="Eg: Thailand">
                         <button type="button" class="btn btn-primary rounded-pill py-2 px-4 position-absolute top-0 end-0 me-2" style="margin-top: 7px;">Search</button> -->
@@ -55,7 +65,6 @@
 {%  block service %}
 {%  endblock service %}
 {% block destination %}
-    
 {% endblock destination %}
 {% block package %}
 <div class="container-xxl py-5">
@@ -84,7 +93,7 @@
                             <small class="fa fa-star text-primary"></small>
                             <small class="fa fa-star text-primary"></small>
                         </div>
-                        <p>This is shirthing pants and we provide all facilites</p>
+                        <p>We offer a variety of shirting pants with full facilities.</p>
                         <div class="d-flex justify-content-center mb-2">
                             <a href="#" class="btn btn-sm btn-primary px-3 border-end" style="border-radius: 30px 0 0 30px;">Read More</a>
                             <a href="#" class="btn btn-sm btn-primary px-3" style="border-radius: 0 30px 30px 0;">Book Now</a>
@@ -111,7 +120,7 @@
                             <small class="fa fa-star text-primary"></small>
                             <small class="fa fa-star text-primary"></small>
                         </div>
-                        <p>This is formal pant and we will Specialy provide facilites like loss type</p>
+                        <p>We specialize in formal pants with unique features such as loss type adjustments.</p>
                         <div class="d-flex justify-content-center mb-2">
                             <a href="#" class="btn btn-sm btn-primary px-3 border-end" style="border-radius: 30px 0 0 30px;">Read More</a>
                             <a href="#" class="btn btn-sm btn-primary px-3" style="border-radius: 0 30px 30px 0;">Book Now</a>
@@ -138,7 +147,7 @@
                             <small class="fa fa-star text-primary"></small>
                             <small class="fa fa-star text-primary"></small>
                         </div>
-                        <p>This is a indian traditional kurta and fully comfortable</p>
+                        <p>Experience ultimate comfort with our Indian traditional kurtas.</p>
                         <div class="d-flex justify-content-center mb-2">
                             <a href="#" class="btn btn-sm btn-primary px-3 border-end" style="border-radius: 30px 0 0 30px;">Read More</a>
                             <a href="#" class="btn btn-sm btn-primary px-3" style="border-radius: 0 30px 30px 0;">Book Now</a>
@@ -160,7 +169,7 @@
 <div class="container-xxl py-5">
     <div class="container">
         <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-            <h6 class="section-title bg-white text-center text-primary px-3">Suit specialist</h6> 
+            <h6 class="section-title bg-white text-center text-primary px-3">Suit Specialist</h6> 
             <!-- <h1 class="mb-5"></h1> -->
         </div>
         <div class="row g-4 justify-content-center">
@@ -183,7 +192,7 @@
                             <small class="fa fa-star text-primary"></small>
                             <small class="fa fa-star text-primary"></small>
                         </div>
-                        <p>This is a formal english suit and very tight free</p>
+                        <p>Our formal English suits offer a comfortable, tailored fit.</p>
                         <div class="d-flex justify-content-center mb-2">
                             <a href="#" class="btn btn-sm btn-primary px-3 border-end" style="border-radius: 30px 0 0 30px;">Read More</a>
                             <a href="#" class="btn btn-sm btn-primary px-3" style="border-radius: 0 30px 30px 0;">Book Now</a>
@@ -210,7 +219,7 @@
                             <small class="fa fa-star text-primary"></small>
                             <small class="fa fa-star text-primary"></small>
                         </div>
-                        <p>This is a safari-suits which is originally by india</p>
+                        <p>Authentic Indian safari suits, crafted with traditional elegance.</p>
                         <div class="d-flex justify-content-center mb-2">
                             <a href="#" class="btn btn-sm btn-primary px-3 border-end" style="border-radius: 30px 0 0 30px;">Read More</a>
                             <a href="#" class="btn btn-sm btn-primary px-3" style="border-radius: 0 30px 30px 0;">Book Now</a>
@@ -237,7 +246,7 @@
                             <small class="fa fa-star text-primary"></small>
                             <small class="fa fa-star text-primary"></small>
                         </div>
-                        <p>This is a simple coat for domestic purpose and sutiable</p>
+                        <p>A versatile coat for everyday use, perfect for domestic purposes.</p>
                         <div class="d-flex justify-content-center mb-2">
                             <a href="#" class="btn btn-sm btn-primary px-3 border-end" style="border-radius: 30px 0 0 30px;">Read More</a>
                             <a href="#" class="btn btn-sm btn-primary px-3" style="border-radius: 0 30px 30px 0;">Book Now</a>
@@ -283,7 +292,7 @@
                             <small class="fa fa-star text-primary"></small>
                             <small class="fa fa-star text-primary"></small>
                         </div>
-                        <p>This is a suiting shirt for a fromal getups  and formly in fashion</p>
+                        <p>A stylish shirt designed for formal wear, always in fashion.</p>
                         <div class="d-flex justify-content-center mb-2">
                             <a href="#" class="btn btn-sm btn-primary px-3 border-end" style="border-radius: 30px 0 0 30px;">Read More</a>
                             <a href="#" class="btn btn-sm btn-primary px-3" style="border-radius: 0 30px 30px 0;">Book Now</a>
@@ -310,7 +319,7 @@
                             <small class="fa fa-star text-primary"></small>
                             <small class="fa fa-star text-primary"></small>
                         </div>
-                        <p>This is a sleeply salvar for in legs and shared in kurtas</p>
+                        <p>Comfortable salwar for pairing with kurtas, designed for relaxed wear.</p>
                         <div class="d-flex justify-content-center mb-2">
                             <a href="#" class="btn btn-sm btn-primary px-3 border-end" style="border-radius: 30px 0 0 30px;">Read More</a>
                             <a href="#" class="btn btn-sm btn-primary px-3" style="border-radius: 0 30px 30px 0;">Book Now</a>
@@ -337,7 +346,7 @@
                             <small class="fa fa-star text-primary"></small>
                             <small class="fa fa-star text-primary"></small>
                         </div>
-                        <p>This is a indian pathani suits which secialy pathans and punjabi</p>
+                        <p>Traditional Pathani suits, specially designed for Pathans and Punjabis.</p>
                         <div class="d-flex justify-content-center mb-2">
                             <a href="#" class="btn btn-sm btn-primary px-3 border-end" style="border-radius: 30px 0 0 30px;">Read More</a>
                             <a href="#" class="btn btn-sm btn-primary px-3" style="border-radius: 0 30px 30px 0;">Book Now</a>
@@ -349,34 +358,28 @@
     </div>
 </div>
 
+            
+
+
+            
+
+            
+
+
 {% endblock package %}
 {% block booking %}
-<!-- CustumerHome.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Customer Home</title>
-</head>
-<body>
-    <h1>Welcome, {{ email }}</h1>
-    <p>{{ msg }}</p>
-</body>
-</html>
 {% endblock booking %}
-
-
-
 {% block process %}
 {% endblock process %}
 {% block team %}
 {% endblock team %}
 
 {% block testimonial %}
+    
 {% endblock testimonial %}
 
-
-
+{% block footer %}
+{% endblock footer %}
 
 
 
