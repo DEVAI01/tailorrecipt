@@ -7,7 +7,7 @@ class User(models.Model):
     userid=models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     email = models.CharField(max_length=100,unique=True)
-    password = models.CharField(max_length=20)    
+    password = models.CharField(max_length=200)    
     mobile = models.CharField(max_length=10)
     gender = models.CharField(max_length=10)
     dob = models.DateField()
@@ -102,3 +102,20 @@ class Dueset(models.Model):
     def __str__(self):
         return "{0},{1},{2},{3},{4}".format(self.Custumerid,self.Due_no,self.date,self.Due_amount,self.dob)
     
+    
+    
+from django.db import models
+from django.utils import timezone
+
+class EmailStatus(models.Model):
+    recipient = models.EmailField()
+    subject = models.CharField(max_length=255)
+    body = models.TextField()
+    attachment_path = models.CharField(max_length=500, null=True, blank=True)
+    attachment_name = models.CharField(max_length=255, null=True, blank=True)
+    status = models.CharField(max_length=50, default='Pending')  # Status can be 'Pending', 'Sent', 'Failed'
+    created_at = models.DateTimeField(auto_now_add=True)
+    sent_at = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return f"Email to {self.recipient} - {self.status}"

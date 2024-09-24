@@ -1,5 +1,5 @@
 # views.py
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.conf import settings
 
 
@@ -53,3 +53,18 @@ def services(request):
     email = request.session.get('email', 'Guest')
     print(email)
     return render(request, 'Services.html', {'curl': curl, 'msg': msg, 'email': email})
+
+
+
+def some_protected_view(request):
+    if 'email' not in request.session:
+        return redirect('login')
+    # ... rest of your view code ...
+    
+from django.contrib.auth import logout as auth_logout
+from django.shortcuts import redirect
+
+def logout(request):
+    auth_logout(request)
+    request.session.flush()
+    return redirect('login')
