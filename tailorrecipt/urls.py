@@ -30,5 +30,5 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
     path('search/', views.search, name='search'),
     path("TailorApp/", include("TailorApp.urls")),
-    path("CustumerApp/", include("CustumerApp.urls"))
+    path("CustumerApp/", include(("CustumerApp.urls", "CustumerApp"), namespace="CustumerApp")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

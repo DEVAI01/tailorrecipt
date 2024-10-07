@@ -112,9 +112,9 @@ from django.contrib.auth.hashers import check_password
 #     # In case of failure, render login page with message
 #     return render(request, 'Login.html', {'form': fm, 'msg': msg})
 
-    
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.contrib.auth.hashers import check_password
 
 def login(request):
     fm = UserLogin()
@@ -126,7 +126,9 @@ def login(request):
             gpass = fm.cleaned_data['password']
             try:
                 obj = User.objects.get(email=gemail)
-                if gpass == obj.password:
+                
+                # Check if the provided password matches the hashed password in the database
+                if check_password(gpass, obj.password):
                     request.session['email'] = gemail
                     request.session['user_id'] = obj.userid
                     
@@ -147,7 +149,8 @@ def login(request):
     
     # For GET requests or failed logins
     next_url = request.GET.get('next', '')
-    return render(request, 'Login.html', {"curl": curl, 'form': fm, 'msg': msg, 'next': next_url})   
+    return render(request, 'Login.html', {"curl": curl, 'form': fm, 'msg': msg, 'next': next_url})
+   
               
     # sudo systemctl daemon-reload
 def service(request):
@@ -209,19 +212,17 @@ def register(request):
             print("Email:", fm.cleaned_data['email'])
             print("Password:", fm.cleaned_data['password'])
             print("Mobile:", fm.cleaned_data['mobile'])
-            print("Gender:", fm.cleaned_data['gender'])
-            print("Date Of Birth:", fm.cleaned_data['dob'])
+        
             name = fm.cleaned_data['name']
             email = fm.cleaned_data['email']
             password = fm.cleaned_data['password']
             mobile = fm.cleaned_data['mobile']
-            gender = fm.cleaned_data['gender']
-            dob = fm.cleaned_data['dob']
+     
             
             # Hash the password before saving
             hashed_password = make_password(password)
             
-            Userobj = User(name=name, email=email, password=hashed_password, mobile=mobile, gender=gender, dob=dob)
+            Userobj = User(name=name, email=email, password=hashed_password, mobile=mobile)
             
             # For sending a verification email to the registered email ID
             try:
