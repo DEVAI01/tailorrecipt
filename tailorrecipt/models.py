@@ -9,14 +9,12 @@ class User(models.Model):
     email = models.CharField(max_length=100,unique=True)
     password = models.CharField(max_length=200)    
     mobile = models.CharField(max_length=10)
-    gender = models.CharField(max_length=10)
-    dob = models.DateField()
     date = models.DateTimeField('date published', default=timezone.localtime)
     status = models.IntegerField(default=0)
     role = models.CharField(default="custumer",max_length=10)
 
     def __str__(self):
-        return "{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7},{8},{9}".format( self.userid,self.name, self.email, self.password, self.mobile,self.gender,self.dob,self.date,self.status,self.role)
+        return "{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}".format( self.userid,self.name, self.email, self.password, self.mobile,self.date,self.status,self.role)
     
 class Addcustumer(models.Model):
     Tailorid=models.IntegerField(default=1)
@@ -119,3 +117,19 @@ class EmailStatus(models.Model):
 
     def __str__(self):
         return f"Email to {self.recipient} - {self.status}"
+
+
+
+class clothbooking(models.Model):
+    Booking_Id = models.AutoField(primary_key=True)
+    Mail_Id = models.CharField(max_length=100)
+    Mobile_No = models.BigIntegerField()  # Updated field to BigIntegerField
+    Upper_Wear = models.TextField()
+    Lower_Wear = models.TextField()
+    Description = models.TextField()
+    quantity = models.IntegerField()
+    date = models.DateTimeField('date published', default=timezone.localtime)
+    Status = models.CharField(default='Pending', max_length=50)
+
+    def __str__(self):
+        return f"Email to {self.Booking_Id} - {self.Mail_Id}"

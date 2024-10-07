@@ -55,7 +55,6 @@
 {%  block service %}
 {%  endblock service %}
 {% block destination %}
-    
 {% endblock destination %}
 {% block package %}
 <!DOCTYPE html>
@@ -80,7 +79,7 @@
                     </div>
                     <div class="col-md-6">
                         <h1 class="text-white mb-4">FOR booking fill details</h1>
-                        <form action="" method="post" enctype="multipart/form-data">
+                        <form action="" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
                             {% csrf_token %}
                             <ul class="nav nav-tabs mb-4" id="clothingTabs" role="tablist">
                                 <li class="nav-item" role="presentation">
@@ -156,8 +155,52 @@
                             </div>
                             <div class="col-12 mt-3">
                                 <div class="form-floating">
-                                    <textarea class="form-control bg-transparent" placeholder="Special Request" id="message" name="description" style="height: 100px"></textarea>
-                                    <label for="message">About Request</label>
+                                    <input type="number" class="form-control bg-transparent" placeholder="Quantity" id="quantity" name="quantity" min="0" max="4" required>
+                                    <label for="quantity">Overall Quantity</label>
+                                    <div id="quantityMessage" class="text-danger mt-2" style="display: none;">Please enter a quantity between 1 and 4.</div>
+                                </div>
+                            </div>
+    
+                            <script>
+                                document.getElementById('quantity').addEventListener('input', function() {
+                                    const quantityInput = this;
+                                    const quantityMessageDiv = document.getElementById('quantityMessage');
+    
+                                    if (quantityInput.value < 1 || quantityInput.value > 4) {
+                                        quantityMessageDiv.style.display = 'block';  // Show message
+                                    } else {
+                                        quantityMessageDiv.style.display = 'none';   // Hide message
+                                    }
+                                });
+    
+                                function validateForm() {
+                                    const upperWearCheckboxes = document.querySelectorAll('input[name="upper_wear"]:checked');
+                                    const lowerWearCheckboxes = document.querySelectorAll('input[name="lower_wear"]:checked');
+                                    const quantityInput = document.getElementById('quantity');
+    
+                                    if (upperWearCheckboxes.length === 0) {
+                                        alert('Please select at least one item from Upper Wear.');
+                                        return false; // Prevent form submission
+                                    }
+    
+                                    if (lowerWearCheckboxes.length === 0) {
+                                        alert('Please select at least one item from Lower Wear.');
+                                        return false; // Prevent form submission
+                                    }
+    
+                                    if (quantityInput.value < 1 || quantityInput.value > 4) {
+                                        alert('Please enter a valid quantity between 1 and 4.');
+                                        return false; // Prevent form submission
+                                    }
+    
+                                    return true; // Allow form submission
+                                }
+                            </script>
+    
+                            <div class="col-12 mt-3">
+                                <div class="form-floating">
+                                    <textarea class="form-control bg-transparent" placeholder="Special Request" id="description" name="description" style="height: 100px" required></textarea>
+                                    <label for="description">About Request</label>
                                 </div>
                             </div>
                             <div class="col-12 mt-3">
@@ -169,8 +212,7 @@
             </div>
         </div>
     </div>
-</body>
-</html>
+    
 
 
 {% endblock package %}
@@ -185,14 +227,150 @@
 <body>
     <h1>Welcome, {{ email }}</h1>
     <p>{{ msg }}</p>
+    {% if booking_id %}
+        <p>Your Booking ID is: {{ booking_id }}</p>
+    {% endif %}
+    
 </body>
 </html>
 {% endblock booking %}
 
 
 
+
 {% block process %}
+<h2>All Bookings</h2>
+<div class="table-container">
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th>Booking ID</th>
+                <th>Email</th>
+                <th>Upper Wear</th>
+                <th>Lower Wear</th>
+                <th>Quantity</th>
+                <th>Actions</th>  <!-- New column for actions -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in all_bookings %}
+            <tr>
+                <td>{{ booking.Booking_Id }}</td>
+                <td>{{ booking.Mail_Id }}</td>
+                <td>{{ booking.Upper_Wear }}</td>
+                <td>{{ booking.Lower_Wear }}</td>
+                <td>{{ booking.quantity }}</td>
+                <td>
+                    <a href="{% url 'CustumerApp:download_receipt' booking.Booking_Id %}">Download Receipt</a>
+
+                    <!-- Debug: Print Booking_Id -->
+                    <span>{{ booking.Booking_Id }}</span>
+                </td>
+                
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6">No bookings available</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<style>
+
+<style>
+/* Container for table */
+.table-container {
+    margin: 20px 0;
+    overflow-x: auto;
+}
+
+/* Style for the table */
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    text-align: left;
+    border-radius: 8px 8px 0 0;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Header row styling */
+.styled-table thead tr {
+    background-color: #86B817;
+    color: #ffffff;
+    text-align: left;
+    font-weight: bold;
+}
+
+/* Table body rows */
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+/* Alternating row colors for better readability */
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+/* Highlight on hover */
+.styled-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Last row border removal */
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+/* Responsive table (for small screens) */
+@media screen and (max-width: 600px) {
+    .styled-table thead {
+        display: none;
+    }
+    .styled-table, .styled-table tbody, .styled-table tr, .styled-table td {
+        display: block;
+        width: 100%;
+    }
+    .styled-table tr {
+        margin-bottom: 15px;
+    }
+    .styled-table td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+    }
+    .styled-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 50%;
+        padding-left: 15px;
+        font-weight: bold;
+        text-align: left;
+    }
+}
+
+
+.download-btn {
+    background-color: #86B817;
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.download-btn:hover {
+    background-color: #75A30F;
+}
+</style>
 {% endblock process %}
+
+
 {% block team %}
 {% endblock team %}
 
