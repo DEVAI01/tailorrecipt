@@ -31,7 +31,7 @@ SECRET_KEY = 'django-insecure-akx3)w@(q5mbc4e2s%hes2f5@mxib*qd+gjd&%!m(+te!s#aye
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+#ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -97,7 +97,7 @@ WSGI_APPLICATION = 'tailorrecipt.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'naveen',
+        'NAME': 'naveen02',
         'USER': 'myuser',
         'PASSWORD': 'naveen1211',
         'HOST': 'localhost',  # Or your MySQL server's IP address
@@ -156,7 +156,12 @@ USE_TZ = True
 
 #proudction 
 
-ALLOWED_HOSTS = ['murlitailor.shop', 'www.murlitailor.shop']
+ALLOWED_HOSTS = [
+    'murlitailor.shop',
+    'www.murlitailor.shop',
+    '3.95.185.94'  # Add your server's IP address if you need to access it directly
+]
+
 
 #ALLOWED_HOSTS = ['3.95.185.94']
 CURRENT_URL = 'https://murlitailor.shop/' 
