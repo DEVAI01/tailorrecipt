@@ -32,6 +32,7 @@ urlpatterns=[
     path('deleteiteml/',views.deleteiteml),
     path('deleteuser/',views.deleteuser),
     path('filter/',views.filter),
+    path('bookings/',views.bookings),
 
     
     

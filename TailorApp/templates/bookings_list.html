@@ -23,10 +23,11 @@
                         <a href="{{curl}}TailorApp/deleteuser"  class="dropdown-item">Delete User</a>
                         <a href="{{curl}}TailorApp/filter"  class="dropdown-item">Filter Custumer Data</a>
                         <a href="{{curl}}TailorApp/bookings"  class="dropdown-item">Bookings</a>
+                        
                     </div>
                 </div> 
-                <a href="{{curl}}TailorApp/custumerlist" class="nav-item nav-link active">Custumer List</a>
-           
+                <a href="{{curl}}TailorApp/custumerlist" class="nav-item nav-link active">Bookings List</a>
+               
                 <!-- <a href="about.html" class="nav-item nav-link">About</a> -->
                 <a href="{{curl}}TailorApp/dueview" class="nav-item nav-link">Due View</a>
                
@@ -43,7 +44,7 @@
         <div class="container py-5">
             <div class="row justify-content-center py-5">
                 <div class="col-lg-10 pt-lg-5 mt-lg-5 text-center">
-                    <h1 class="display-3 text-white mb-3 animated slideInDown">Delete Custumer</h1>
+                    <h1 class="display-3 text-white mb-3 animated slideInDown">BOOKING LIST</h1>
                     <p class="fs-4 text-white mb-4 animated slideInDown"></details></p>
                     {% comment %} <form  method="post"  action="" novalidate >
                         {% csrf_token %}
@@ -59,7 +60,7 @@
 </div>
 {%  endblock navbar %}
 {%  block about %}  
-<a class="btn btn-primary py-3 px-5 mt-2" style=" margin-left: 90%;" href="{{curl}}TailorApp/changepassword">Settings</a>
+
 {%  endblock about %}
 {%  block service %}
 {%  endblock service %}
@@ -70,38 +71,116 @@
 
 <h6 class="section-title bg-white text-center text-primary px-3">Username = Admin : Naveen patidar</h6>
 
-
-<div class="position-relative mx-auto" style="max-width: 400px;">
-    <form  method="post"  action="" novalidate >
-    {% csrf_token %}
-        <input id="searchid" class="form-control border-primary w-100 py-3 ps-4 pe-5" name="searchid" type="text" placeholder="User id">
-        <br>
-        <button type="submit" id="submitBtn" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2" disabled >Delete</button>
-
-        <br>
-        <br>
-        
-</div>
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    var searchInput = document.getElementById('searchid');
-    var submitBtn = document.getElementById('submitBtn');
-
-    searchInput.addEventListener('input', function() {
-        var inputValue = searchInput.value.trim();
-        // Check if input value is an integer
-        if (/^\d+$/.test(inputValue)) {
-            submitBtn.disabled = false;
-        } else {
-            submitBtn.disabled = true;
-        }
-    });
-});
-</script>
-
 {% endblock package %}
 {% block booking %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dues List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        h1 {
+            text-align: center;
+            margin: 20px 0;
+            color: #ecf0f1;
+        }
+        form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        input[type="date"] {
+            padding: 10px;
+            margin: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #34495e;
+            color: #ecf0f1;
+            border: none;
+            cursor: pointer;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #34495e;
+            color: #ecf0f1;
+        }
+        table, th, td {
+            border: 1px solid #7f8c8d;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #2c3e50;
+        }
+        tr:nth-child(even) {
+            background-color: #3c556f;
+        }
+        tr:nth-child(odd) {
+            background-color: #34495e;
+        }
+        tr:hover {
+            background-color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>List of Bookings</h1>
+        
+        <!-- Filter form for Booking_Id -->
+        <form method="GET" action="">
+            <label for="booking_id">Filter by Booking ID:</label>
+            <input type="text" id="booking_id" name="booking_id" value="{{ booking_id }}">
+            <button type="submit">Filter</button>
+        </form>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Booking Id</th>
+                    <th>Customer Name</th>
+                    <th>Customer Mobile</th>
+                    <th>Bookings Date</th>
+                    <th>Quantity</th>
+                    <th>Status</th>
+                    <th>Upper Wear</th>
+                    <th>Lower Wear</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for customer in customers %}
+                <tr>
+                    <td>{{ customer.Booking_Id }}</td>
+                    <td>{{ customer.name }}</td>
+                    <td>{{ customer.Mobile_No }}</td>
+                    <td>{{ customer.date }}</td>
+                    <td>{{ customer.quantity }}</td>
+                    <td>{{ customer.Status }}</td>
+                    <td>{{ customer.Upper_Wear }}</td>
+                    <td>{{ customer.Lower_Wear }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
 
 {% endblock booking %}
 

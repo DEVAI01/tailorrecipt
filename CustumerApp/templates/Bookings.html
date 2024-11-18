@@ -217,7 +217,6 @@
 
 {% endblock package %}
 {% block booking %}
-<!-- CustumerHome.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -230,13 +229,9 @@
     {% if booking_id %}
         <p>Your Booking ID is: {{ booking_id }}</p>
     {% endif %}
-    
 </body>
 </html>
 {% endblock booking %}
-
-
-
 
 {% block process %}
 <h2>All Bookings</h2>
@@ -249,24 +244,22 @@
                 <th>Upper Wear</th>
                 <th>Lower Wear</th>
                 <th>Quantity</th>
-                <th>Actions</th>  <!-- New column for actions -->
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             {% for booking in all_bookings %}
             <tr>
-                <td>{{ booking.Booking_Id }}</td>
-                <td>{{ booking.Mail_Id }}</td>
-                <td>{{ booking.Upper_Wear }}</td>
-                <td>{{ booking.Lower_Wear }}</td>
-                <td>{{ booking.quantity }}</td>
-                <td>
-                    <a href="{% url 'CustumerApp:download_receipt' booking.Booking_Id %}">Download Receipt</a>
-
-                    <!-- Debug: Print Booking_Id -->
-                    <span>{{ booking.Booking_Id }}</span>
+                <td data-label="Booking ID">{{ booking.Booking_Id }}</td>
+                <td data-label="Email">{{ booking.Mail_Id }}</td>
+                <td data-label="Upper Wear">{{ booking.Upper_Wear }}</td>
+                <td data-label="Lower Wear">{{ booking.Lower_Wear }}</td>
+                <td data-label="Quantity">{{ booking.quantity }}</td>
+                <td data-label="Actions">
+                    <a class="download-btn" href="{% url 'CustumerApp:download_receipt' booking.Booking_Id %}">
+                        Download Receipt
+                    </a>
                 </td>
-                
             </tr>
             {% empty %}
             <tr>
@@ -278,11 +271,10 @@
 </div>
 
 <style>
-
-<style>
 /* Container for table */
 .table-container {
-    margin: 20px 0;
+    margin: 20px auto;
+    max-width: 100%;
     overflow-x: auto;
 }
 
@@ -303,7 +295,6 @@
 .styled-table thead tr {
     background-color: #86B817;
     color: #ffffff;
-    text-align: left;
     font-weight: bold;
 }
 
@@ -312,7 +303,7 @@
     border-bottom: 1px solid #dddddd;
 }
 
-/* Alternating row colors for better readability */
+/* Alternating row colors */
 .styled-table tbody tr:nth-of-type(even) {
     background-color: #f3f3f3;
 }
@@ -322,12 +313,7 @@
     background-color: #f1f1f1;
 }
 
-/* Last row border removal */
-.styled-table tbody tr:last-of-type {
-    border-bottom: 2px solid #009879;
-}
-
-/* Responsive table (for small screens) */
+/* Responsive table for small screens */
 @media screen and (max-width: 600px) {
     .styled-table thead {
         display: none;
@@ -343,6 +329,8 @@
         text-align: right;
         padding-left: 50%;
         position: relative;
+        padding: 12px;
+        border-bottom: 1px solid #ddd;
     }
     .styled-table td::before {
         content: attr(data-label);
@@ -355,13 +343,15 @@
     }
 }
 
-
+/* Download button style */
 .download-btn {
     background-color: #86B817;
     color: white;
-    padding: 10px 15px;
+    padding: 8px 12px;
     text-decoration: none;
     border-radius: 5px;
+    display: inline-block;
+    text-align: center;
 }
 
 .download-btn:hover {
@@ -369,6 +359,7 @@
 }
 </style>
 {% endblock process %}
+
 
 
 {% block team %}

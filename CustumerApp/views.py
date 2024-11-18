@@ -209,8 +209,8 @@ def download_receipt(request, booking_id):
     note_style = ParagraphStyle('Note', parent=styles['Normal'], fontSize=10, textColor=colors.grey, alignment=1)
     condition_style = ParagraphStyle('Condition', parent=styles['Normal'], fontSize=8, textColor=colors.grey, alignment=1)
 
-    note = Paragraph("Note: This booking will be processed after 5 days from the booking date.", note_style)
-    condition = Paragraph("This receipt is for booking purposes only. Purchase conditions will be applied on demand.", condition_style)
+    note = Paragraph("Note: This booking is valid only after 5 days from the booking date.", note_style)
+    condition = Paragraph("This receipt is for booking purposes only; purchase conditions will apply upon request.", condition_style)
 
     # Adjust the Y-coordinates to reduce the gap
     note.wrapOn(p, 6 * inch, inch)

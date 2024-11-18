@@ -1,5 +1,5 @@
 from django.contrib import admin
-from tailorrecipt.models import User,Addcustumer,Lowerdetsils,Upperdetsils,Paymentdetails,Dueset,EmailStatus,clothbooking
+from tailorrecipt.models import User,Addcustumer,Lowerdetsils,Upperdetsils,Paymentdetails,Dueset,EmailStatus,clothbooking,clothbooking
 
 # Register your models here.
 admin.site.register(User)

@@ -1208,7 +1208,7 @@ def deleteuser(request):
 from django.shortcuts import render
 from django.db.models import Sum
 from . import models
-from tailorrecipt.models import User,Addcustumer,Lowerdetsils,Upperdetsils,Paymentdetails,Dueset
+from tailorrecipt.models import User,Addcustumer,Lowerdetsils,Upperdetsils,Paymentdetails,Dueset,clothbooking
 def filter(request):
     msg = ''
     start_date = request.GET.get('start_date')
@@ -1252,5 +1252,39 @@ def logout(request):
     auth_logout(request)
     request.session.flush()
     return redirect('index')
+
+
+def bookings(request):
+    msg = ''
+    
+    # Get the Booking_Id filter value from the request (if any)
+    booking_id = request.GET.get('booking_id', None)
+    
+    # Fetch all cloth bookings, filtered by Booking_Id if provided
+    if booking_id:
+        customers = clothbooking.objects.filter(Booking_Id=booking_id)
+    else:
+        customers = clothbooking.objects.all()
+    
+    # Iterate over each booking and add extra fields from the User model
+    for customer in customers:
+        try:
+            # Fetch the user based on the email field
+            user = User.objects.get(email=customer.Mail_Id)
+            # Dynamically add 'userid' and 'name' attributes to the customer object
+            customer.userid = user.userid
+            customer.name = user.name
+        except User.DoesNotExist:
+            # If no user is found, set default values
+            customer.userid = None
+            customer.name = "Unknown"
+    
+    # Render the template with the updated customers list and filter value
+    return render(request, 'bookings_list.html', {
+        'curl': curl,
+        'msg': msg,
+        'customers': customers,
+        'booking_id': booking_id
+    })
 
 
