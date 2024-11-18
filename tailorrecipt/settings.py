@@ -29,7 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-akx3)w@(q5mbc4e2s%hes2f5@mxib*qd+gjd&%!m(+te!s#aye'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 #ALLOWED_HOSTS = []
 
@@ -81,7 +81,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'tailorrecipt.wsgi.application'
 
 
-#local
+# #local
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
@@ -138,21 +138,23 @@ USE_L10N = True
 
 USE_TZ = True
 
-# #local
-# # Static files (CSS, JavaScript, Images)
-# # https://docs.djangoproject.com/en/3.2/howto/static-files/
+#local
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 # STATIC_URL = '/static/'
 # CURRENT_URL= 'http://localhost:8000/'
 
 
-# # Default primary key field type
-# # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
+# Default primary key field type
+# https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 # DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # MEDIA_URL='/media/'
 # MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 
+# DEBUG = False
+# ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 #proudction 
 
