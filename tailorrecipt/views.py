@@ -263,3 +263,7 @@ def logout_view(request):
     request.session.flush()
     return redirect('index')
 
+def custom_404_view(request, exception=None):
+    print("Custom 404 view triggered")
+    return render(request, '404.html', status=404)
+

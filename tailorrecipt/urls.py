@@ -21,7 +21,7 @@ from django.conf import settings
 from django.contrib.auth.views import LoginView, LogoutView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('naveen/', admin.site.urls),
     path('', views.index, name='index'),
     path('login/', views.login, name='login'),
     path('logout/', views.logout_view, name='logout'),
@@ -32,3 +32,5 @@ urlpatterns = [
     path("TailorApp/", include("TailorApp.urls")),
     path("CustumerApp/", include(("CustumerApp.urls", "CustumerApp"), namespace="CustumerApp")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler404 = 'tailorrecipt.views.custom_404_view'
