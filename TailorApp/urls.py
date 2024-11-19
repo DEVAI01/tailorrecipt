@@ -33,6 +33,7 @@ urlpatterns=[
     path('deleteuser/',views.deleteuser),
     path('filter/',views.filter),
     path('bookings/',views.bookings),
+    path('QRCODE',views.QRCODE),
 
     
     

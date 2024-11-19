@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code</title>
+</head>
+<body>
+    <h1>Customer QR Code</h1>
+    <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code">
+    <h2>Customer Details</h2>
+    <ul>
+        <li>Customer Name: {{ data.Customer Name }}</li>
+        <li>Mobile: {{ data.Mobile }}</li>
+        <li>Delivery Date: {{ data.Delivery Date }}</li>
+        <li>Customer ID: {{ data.Customer ID }}</li>
+        <li>Last Updated: {{ data.Last Updated }}</li>
+    </ul>
+    <a href="?download=1">Download QR Code</a>
+</body>
+</html>

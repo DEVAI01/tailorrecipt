@@ -213,7 +213,52 @@ def coupleclothes(request):
 
     return render(request,'Coupleclothes.html',{'curl':curl,'context':obj})    
 
-      
+
+import qrcode
+from django.http import HttpResponse
+from django.shortcuts import render
+from io import BytesIO
+import qrcode
+from django.http import HttpResponse
+
+from io import BytesIO
+
+
+
+def QRCODE(request):
+    if request.method == "GET":
+        # Fetch the latest customer
+        latest_customer = Addcustumer.objects.latest('Custumerid')
+        # Customer data to include in the QR code
+        data = {
+            "Customer Name": latest_customer.Custumer_name,
+            "Mobile": latest_customer.Custumer_mobile,
+            "Delivery Date": latest_customer.Delivery_date.strftime('%Y-%m-%d'),
+            "Customer ID": latest_customer.Custumerid,
+            "Last Updated":latest_customer.Update
+        }
+
+        # Generate the QR code
+        qr = qrcode.QRCode(
+            version=1,
+            error_correction=qrcode.constants.ERROR_CORRECT_L,
+            box_size=10,
+            border=4,
+        )
+        qr.add_data(data)
+        qr.make(fit=True)
+        qr_image = qr.make_image(fill_color="black", back_color="white")
+
+        # Save QR code to a BytesIO object for response
+        buffer = BytesIO()
+        qr_image.save(buffer, format="PNG")
+        buffer.seek(0)
+        
+        # Return the QR code as a downloadable file
+        response = HttpResponse(buffer, content_type="image/png")
+        response['Content-Disposition'] = 'attachment; filename="customer_qr_code.png"'
+        return response
+
 
 def invoice(request):
     if request.method == "GET":
