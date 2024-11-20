@@ -27,7 +27,7 @@
                 <a href="{{curl}}TailorApp/upgradeprogress" class="nav-item nav-link">Update Progress</a>  
                 <a href="{{curl}}TailorApp/searching" class="nav-item nav-link">Searching Custumer</a>
             </div>
-            <a href="{{curl}}TailorApp/changepassword" class="btn btn-primary rounded-pill py-2 px-4">Settings</a> &nbsp; &nbsp;
+            <a href="{{curl}}TailorApp/Settingshome" class="btn btn-primary rounded-pill py-2 px-4">Settings</a> &nbsp; &nbsp;
             <a href="{% url 'logout' %}" class="btn btn-primary rounded-pill py-2 px-4">Log Out</a>
         </div>
     </nav>
@@ -68,7 +68,7 @@
                         {% for x in context %}
                         <div class="mb-4">
                             <p class="h4 mb-1"><strong>Customer Name:</strong> <span class="text-info">{{ x.Custumer_name }}</span></p>
-                            <p class="h4 mb-1"><strong>Customer Name:</strong> <span class="text-info">{{ x.Custumerid}}</span></p>
+                            <p class="h4 mb-1"><strong>Customer Id:</strong> <span class="text-info">{{ x.Custumerid}}</span></p>
                             <h6 class="section-title bg-white text-center text-primary px-3">Custumer Mobile = {{ x.Custumer_mobile}}</h6>
                             <h6 class="section-title bg-white text-center text-primary px-3">Custumer Delivery= {{ x.Delivery_date}}</h6>
                             <h6 class="section-title bg-white text-center text-primary px-3">Status= {{ x.Update}}</h6>
@@ -106,11 +106,13 @@
             <h1 class="mb-5">Cloth Details</h1>
         </div>
         <div class="row gy-5 gx-4 justify-content-center">
-            <div class="col-lg-10 col-sm-12 wow fadeInUp" data-wow-delay="0.1s">
+
+            <!-- Upper Clothes Section -->
+            <div class="col-lg-10 col-md-12 wow fadeInUp" data-wow-delay="0.1s">
                 <div class="table-responsive">
                     <h5 class="text-center">Upper Clothes</h5>
-                    <table class="table table-bordered table-striped">
-                        <thead>
+                    <table class="table table-bordered table-striped table-sm">
+                        <thead class="table-light">
                             <tr>
                                 <th scope="col">Category Id</th>
                                 <th scope="col">Item</th>
@@ -150,11 +152,12 @@
                 </div>
             </div>
 
-            <div class="col-lg-10 col-sm-12 wow fadeInUp" data-wow-delay="0.3s">
+            <!-- Lower Clothes Section -->
+            <div class="col-lg-10 col-md-12 wow fadeInUp" data-wow-delay="0.3s">
                 <div class="table-responsive">
                     <h5 class="text-center">Lower Clothes</h5>
-                    <table class="table table-bordered table-striped">
-                        <thead>
+                    <table class="table table-bordered table-striped table-sm">
+                        <thead class="table-light">
                             <tr>
                                 <th scope="col">Category Id</th>
                                 <th scope="col">Item</th>
@@ -194,11 +197,12 @@
                 </div>
             </div>
 
-            <div class="col-lg-10 col-sm-12 wow fadeInUp" data-wow-delay="0.5s">
+            <!-- Payment Section -->
+            <div class="col-lg-10 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
                 <div class="table-responsive">
                     <h5 class="text-center">Payment</h5>
-                    <table class="table table-bordered table-striped">
-                        <thead>
+                    <table class="table table-bordered table-striped table-sm">
+                        <thead class="table-light">
                             <tr>
                                 <th scope="col">Receipt No.</th>
                                 <th scope="col">Total Amount</th>
@@ -222,6 +226,7 @@
         </div>
     </div>
 </div>
+
 {% endblock process %}
 
 {% block team %}

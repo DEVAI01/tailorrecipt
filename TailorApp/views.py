@@ -263,6 +263,7 @@ def QRCODE(request):
 def invoice(request):
     if request.method == "GET":
         # Fetch the latest customer
+        
         latest_customer =Addcustumer.objects.latest('Custumerid')
         
         # Get related data
@@ -958,20 +959,9 @@ def searching(request):
         return render(request,'Searching.html',{'curl':curl,'context':data,'context1':data1,'context2':data2,'context3':data3,'media_url':media_url})
     return render(request,'Searching.html',{'curl':curl})
     
-def changepassword(request):
-    msg=""
-    if request.method=="POST":
-        searchid=request.POST.get('searchid')
-        print(searchid)
-        update123=request.POST.get('password')
-        print(update123)
-        try:
-            User.objects.filter(userid=searchid).update(password=update123)
-            msg="Password updated"
-        except:
-            msg="Password not updates"
-        print(msg)
-    return render(request,'ChangePassword.html',{'curl':curl,'msg':msg})
+def Settingshome(request):
+
+    return render(request,'Settingshome.html',{'curl':curl})
 
 
 
@@ -994,9 +984,21 @@ from tailorrecipt.models import User
 
 
 
+
+
+
 def approved(request):
-    users = User.objects.all()
-    return render(request, 'Approved.html', {'curl':curl,'users': users})
+    # Get the UserID from the GET request if provided
+    userid = request.GET.get('userid', '')
+
+    # Filter users based on UserID if it's provided
+    if userid:
+        users = User.objects.filter(userid__icontains=userid)  # Use icontains for case-insensitive search
+    else:
+        users = User.objects.all()  # If no UserID is entered, show all users
+
+    return render(request, 'Approved.html', {'curl': curl, 'users': users, 'userid': userid})
+
 
 def password(request):
     msg=""
@@ -1029,102 +1031,62 @@ def dueview(request):
             due.custumer_mobile = "Not Found"
     return render(request, 'Dueview.html', {'curl':curl,'dues': dues})
 
+
+
 def idinvoice(request):
-    msg=''
-    if request.method=="POST":
-        searchid=request.POST.get('searchid')
+    msg = ''
+    if request.method == "POST":
+        searchid = request.POST.get('searchid')
         print(searchid)
+
+        # Check if the customer exists
+        item_exists = Addcustumer.objects.filter(Custumerid=searchid).exists()
         
-        
-        latest_customer = Addcustumer.objects.get(Custumerid=searchid)
-        
-# Get related data
-        upper_details = Upperdetsils.objects.filter(Custumerid=latest_customer)
-        lower_details = Lowerdetsils.objects.filter(Custumerid=latest_customer)
-        
-        # Get the first payment detail
-        payment_details = Paymentdetails.objects.filter(Custumerid=latest_customer)
-        
-        # Create a byte buffer for the PDF
-        buffer = BytesIO()
+        if item_exists:
+            latest_customer = Addcustumer.objects.get(Custumerid=searchid)
 
-        # Create a document template
-        doc = SimpleDocTemplate(buffer, pagesize=letter, rightMargin=inch, leftMargin=inch, topMargin=inch, bottomMargin=inch)
-        elements = []
+            # Get related data
+            upper_details = Upperdetsils.objects.filter(Custumerid=latest_customer)
+            lower_details = Lowerdetsils.objects.filter(Custumerid=latest_customer)
+            payment_details = Paymentdetails.objects.filter(Custumerid=latest_customer)
 
-        # Define styles
-        styles = getSampleStyleSheet()
-        styles.add(ParagraphStyle(name='Company', fontSize=16, leading=20, alignment=1, textColor=colors.darkblue))
-        styles.add(ParagraphStyle(name='CustomTitle', fontSize=14, leading=18, textColor=colors.black))
-        styles.add(ParagraphStyle(name='CustomNormal', fontSize=12, leading=14, textColor=colors.black))
-        styles.add(ParagraphStyle(name='Terms', fontSize=10, leading=12, textColor=colors.grey))
+            # Create a byte buffer for the PDF
+            buffer = BytesIO()
 
-        # Add company details
-        elements.append(Paragraph("Murli tailor", styles['Company']))
-        elements.append(Paragraph("Email: Murlitailor@gmail.com", styles['CustomNormal']))
-        elements.append(Paragraph("Mobile Number: 9171809182", styles['CustomNormal']))
-        elements.append(Paragraph("Address: khardon kalan shajapur, M.P", styles['CustomNormal']))
-        elements.append(Spacer(1, 12))
+            # Create a document template
+            doc = SimpleDocTemplate(buffer, pagesize=letter, rightMargin=inch, leftMargin=inch, topMargin=inch, bottomMargin=inch)
+            elements = []
 
-        # Add invoice title and customer details
-        elements.append(Paragraph(f"Invoice for: {latest_customer.Custumer_name} (Serial Number: {latest_customer.Custumerid})", styles['Company']))
-        elements.append(Spacer(1, 5))
-        current_date_time = timezone.now().strftime("%Y-%m-%d %H:%M:%S")
-        elements.append(Paragraph(f"Mobile Number: {latest_customer.Custumer_mobile}", styles['CustomNormal']))
-        elements.append(Paragraph(f"Current Date: {current_date_time}", styles['CustomNormal']))
-        elements.append(Paragraph(f"Delivery Date: {latest_customer.Delivery_date}", styles['CustomNormal']))
-        elements.append(Spacer(1, 12))
+            # Define styles
+            styles = getSampleStyleSheet()
+            styles.add(ParagraphStyle(name='Company', fontSize=16, leading=20, alignment=1, textColor=colors.darkblue))
+            styles.add(ParagraphStyle(name='CustomTitle', fontSize=14, leading=18, textColor=colors.black))
+            styles.add(ParagraphStyle(name='CustomNormal', fontSize=12, leading=14, textColor=colors.black))
+            styles.add(ParagraphStyle(name='Terms', fontSize=10, leading=12, textColor=colors.grey))
 
-        # Add upper clothes information
-        elements.append(Paragraph("Upper Clothes Information", styles['CustomTitle']))
-        upper_data = [["#", "DESCRIPTION", "QUANTITY"]]
-        for i, item in enumerate(upper_details, start=1):
-            upper_data.append([str(i), f"{item.Item} (Category ID: {item.Catid})", str(item.Quantity)])
-        upper_table = Table(upper_data, colWidths=[30, 400, 70])
-        upper_table.setStyle(TableStyle([
-            ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
-            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
-            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-            ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
-            ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
-            ('GRID', (0, 0), (-1, -1), 1, colors.black)
-        ]))
-        elements.append(upper_table)
-        elements.append(Spacer(1, 12))
+            # Add company details
+            elements.append(Paragraph("Murli tailor", styles['Company']))
+            elements.append(Paragraph("Email: Murlitailor@gmail.com", styles['CustomNormal']))
+            elements.append(Paragraph("Mobile Number: 9171809182", styles['CustomNormal']))
+            elements.append(Paragraph("Address: khardon kalan shajapur, M.P", styles['CustomNormal']))
+            elements.append(Spacer(1, 12))
 
-        # Add lower clothes information
-        elements.append(Paragraph("Lower Clothes Information", styles['CustomTitle']))
-        lower_data = [["#", "DESCRIPTION", "QUANTITY"]]
-        for i, item in enumerate(lower_details, start=1):
-            lower_data.append([str(i), f"{item.Item} (Category ID: {item.Catid})", str(item.Quantity)])
-        lower_table = Table(lower_data, colWidths=[30, 400, 70])
-        lower_table.setStyle(TableStyle([
-            ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
-            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
-            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-            ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
-            ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
-            ('GRID', (0, 0), (-1, -1), 1, colors.black)
-        ]))
-        elements.append(lower_table)
-        elements.append(Spacer(1, 12))
-        payment_details = Paymentdetails.objects.filter(Custumerid=latest_customer)
+            # Add invoice title and customer details
+            elements.append(Paragraph(f"Invoice for: {latest_customer.Custumer_name} (Serial Number: {latest_customer.Custumerid})", styles['Company']))
+            elements.append(Spacer(1, 5))
+            current_date_time = timezone.now().strftime("%Y-%m-%d %H:%M:%S")
+            elements.append(Paragraph(f"Mobile Number: {latest_customer.Custumer_mobile}", styles['CustomNormal']))
+            elements.append(Paragraph(f"Current Date: {current_date_time}", styles['CustomNormal']))
+            elements.append(Paragraph(f"Delivery Date: {latest_customer.Delivery_date}", styles['CustomNormal']))
+            elements.append(Spacer(1, 12))
 
-        # Add payment details
-        if payment_details.exists():
-            total_amount = payment_details.aggregate(Sum('Totalamount'))['Totalamount__sum'] or 0
-            advance_amount = payment_details.aggregate(Sum('Advanceamount'))['Advanceamount__sum'] or 0
-            due_amount = payment_details.aggregate(Sum('Dueamount'))['Dueamount__sum'] or 0
-            elements.append(Paragraph("Payment Details", styles['CustomTitle']))
-            payment_data = [
-                ["Total Amount", f"${total_amount}"],
-                ["Advance Amount", f"${advance_amount}"],
-                ["Due Amount", f"${due_amount}"]
-            ]
-            payment_table = Table(payment_data, colWidths=[150, 150])
-            payment_table.setStyle(TableStyle([
+            # Add upper clothes information
+            elements.append(Paragraph("Upper Clothes Information", styles['CustomTitle']))
+            upper_data = [["#", "DESCRIPTION", "QUANTITY"]]
+            for i, item in enumerate(upper_details, start=1):
+                upper_data.append([str(i), f"{item.Item} (Category ID: {item.Catid})", str(item.Quantity)])
+            upper_table = Table(upper_data, colWidths=[30, 400, 70])
+            upper_table.setStyle(TableStyle([
                 ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
                 ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
                 ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
@@ -1133,44 +1095,89 @@ def idinvoice(request):
                 ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
                 ('GRID', (0, 0), (-1, -1), 1, colors.black)
             ]))
-            elements.append(payment_table)
+            elements.append(upper_table)
             elements.append(Spacer(1, 12))
 
-        # Add terms and conditions
-        elements.append(Paragraph("Terms & Conditions", styles['CustomTitle']))
-        terms = ("Customers must pick up their clothes within one month. We are not responsible for clothes left beyond this period. "
-                 "Please present this receipt when collecting your clothes. Please deposit full payment when taking your clothes, as we do not accept due amounts.")
-        elements.append(Paragraph(terms, styles['Terms']))
-        elements.append(Spacer(1, 48))
+            # Add lower clothes information
+            elements.append(Paragraph("Lower Clothes Information", styles['CustomTitle']))
+            lower_data = [["#", "DESCRIPTION", "QUANTITY"]]
+            for i, item in enumerate(lower_details, start=1):
+                lower_data.append([str(i), f"{item.Item} (Category ID: {item.Catid})", str(item.Quantity)])
+            lower_table = Table(lower_data, colWidths=[30, 400, 70])
+            lower_table.setStyle(TableStyle([
+                ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+                ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+                ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+                ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+                ('GRID', (0, 0), (-1, -1), 1, colors.black)
+            ]))
+            elements.append(lower_table)
+            elements.append(Spacer(1, 12))
 
-        # Add signature
-        elements.append(Paragraph("Artfullstiches", ParagraphStyle(name='Signature', fontSize=14, fontName='Helvetica-Oblique', textColor=colors.black)))
-        elements.append(Spacer(1, 12))
-        elements.append(Paragraph("Owner of Artfullstiches", styles['Normal']))
+            # Add payment details
+            if payment_details.exists():
+                total_amount = payment_details.aggregate(Sum('Totalamount'))['Totalamount__sum'] or 0
+                advance_amount = payment_details.aggregate(Sum('Advanceamount'))['Advanceamount__sum'] or 0
+                due_amount = payment_details.aggregate(Sum('Dueamount'))['Dueamount__sum'] or 0
+                elements.append(Paragraph("Payment Details", styles['CustomTitle']))
+                payment_data = [
+                    ["Total Amount", f"${total_amount}"],
+                    ["Advance Amount", f"${advance_amount}"],
+                    ["Due Amount", f"${due_amount}"]
+                ]
+                payment_table = Table(payment_data, colWidths=[150, 150])
+                payment_table.setStyle(TableStyle([
+                    ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+                    ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+                    ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                    ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                    ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+                    ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+                    ('GRID', (0, 0), (-1, -1), 1, colors.black)
+                ]))
+                elements.append(payment_table)
+                elements.append(Spacer(1, 12))
 
-        # Build the PDF
-        doc.build(elements)
+            # Add terms and conditions
+            elements.append(Paragraph("Terms & Conditions", styles['CustomTitle']))
+            terms = ("Customers must pick up their clothes within one month. We are not responsible for clothes left beyond this period. "
+                     "Please present this receipt when collecting your clothes. Please deposit full payment when taking your clothes, as we do not accept due amounts.")
+            elements.append(Paragraph(terms, styles['Terms']))
+            elements.append(Spacer(1, 48))
 
-        # Get the PDF value
-        buffer.seek(0)
-        pdf = buffer.getvalue()
-        buffer.close()
+            # Add signature
+            elements.append(Paragraph("Artfullstiches", ParagraphStyle(name='Signature', fontSize=14, fontName='Helvetica-Oblique', textColor=colors.black)))
+            elements.append(Spacer(1, 12))
+            elements.append(Paragraph("Owner of Artfullstiches", styles['CustomNormal']))
 
-        pdf_path = f"media/invoice_{latest_customer.Custumerid}.pdf"
-        with open(pdf_path, 'wb') as f:
-            f.write(pdf)
+            # Build the PDF
+            doc.build(elements)
 
-        # Send the PDF via email
-        email_subject = "Your Invoice from Murlitailor"
-        email_body = f"Dear {latest_customer.Custumer_name},\n\n This is invoice of your clothes from murlitalor.shop.\n\nBest regards,\nArtfullstiches"
-        sendMail.sendMail(latest_customer.Emailid, subject=email_subject, html=email_body, attachment_path=pdf_path, attachment_name=f"invoice_{latest_customer.Custumerid}.pdf")
+            # Get the PDF value
+            buffer.seek(0)
+            pdf = buffer.getvalue()
+            buffer.close()
 
-        response = HttpResponse(pdf, content_type='application/pdf')
-        response['Content-Disposition'] = f'attachment; filename="invoice_{latest_customer.Custumerid}.pdf"'
-        
-        return response
-        
-    return render(request, 'Idinvoice.html',{'curl':curl,'msg':msg})
+            # Save the PDF to a file
+            pdf_path = f"media/invoice_{latest_customer.Custumerid}.pdf"
+            with open(pdf_path, 'wb') as f:
+                f.write(pdf)
+
+            # Send the PDF via email
+            email_subject = "Your Invoice from Murlitailor"
+            email_body = f"Dear {latest_customer.Custumer_name},\n\n This is the invoice for your clothes from murlitalor.shop.\n\nBest regards,\nArtfullstiches"
+            sendMail.sendMail(latest_customer.Emailid, subject=email_subject, html=email_body, attachment_path=pdf_path, attachment_name=f"invoice_{latest_customer.Custumerid}.pdf")
+
+            response = HttpResponse(pdf, content_type='application/pdf')
+            response['Content-Disposition'] = f'attachment; filename="invoice_{latest_customer.Custumerid}.pdf"'
+            return response
+        else:
+            msg = f"Item with Id {searchid} does not exist."
+            
+    return render(request, 'Idinvoice.html', {'curl':curl,'msg': msg})
+
 
 
 
@@ -1181,58 +1188,87 @@ def custumerlist(request):
     return render(request,'Custumerlist.html',{'curl':curl,'msg':msg,'customers':customers})
 
 def deletedue(request):
-    msg=''
-    if request.method=="POST":
-        searchid=request.POST.get('searchid')
+    msg = ''
+    if request.method == "POST":
+        searchid = request.POST.get('searchid')
         print(searchid)
         try:
-            Dueset.objects.filter(Custumerid=searchid).delete()
-            msg="Due deleted"
-        except:
-            msg="Due not deleted"
+            # Check if the due record exists
+            due_exists = Dueset.objects.filter(Custumerid=searchid).exists()
+            if due_exists:
+                # Delete the due record
+                Dueset.objects.filter(Custumerid=searchid).delete()
+                msg = f"Due record for Customer Id {searchid} deleted successfully."
+            else:
+                msg = f"No due record found for Customer Id {searchid}."
+        except Exception as e:
+            msg = f"An error occurred while deleting the due record: {str(e)}"
         print(msg)
 
-    return render(request,'Deletedue.html',{'curl':curl,'msg':msg})
+    return render(request, 'Deletedue.html', {'curl': curl, 'msg': msg})
+
     
 def deleteitemu(request):
-    msg=''
-    if request.method=="POST":
-        searchid=request.POST.get('searchid')
+    msg = ''
+    if request.method == "POST":
+        searchid = request.POST.get('searchid')
         print(searchid)
         try:
-            Upperdetsils.objects.filter(Catid=searchid).delete()
-            msg="Item deleted"
-        except:
-            msg="Item not deleted"
+            # Check if the item exists
+            item_exists = Upperdetsils.objects.filter(Catid=searchid).exists()
+            if item_exists:
+                # Delete the item
+                Upperdetsils.objects.filter(Catid=searchid).delete()
+                msg = f"Item with Id {searchid} deleted successfully from Upper details."
+            else:
+                msg = f"No item found with Id {searchid} in Upper details."
+        except Exception as e:
+            msg = f"An error occurred while deleting the item: {str(e)}"
         print(msg)
 
-    return render(request,'Deleteupper.html',{'curl':curl,'msg':msg})
+    return render(request, 'Deleteupper.html', {'curl': curl, 'msg': msg})
+
 def deleteiteml(request):
-    msg=''
-    if request.method=="POST":
-        searchid=request.POST.get('searchid')
+    msg = ''
+    if request.method == "POST":
+        searchid = request.POST.get('searchid')
         print(searchid)
         try:
-            Lowerdetsils.objects.filter(Catid=searchid).delete()
-            msg="Item deleted"
-        except:
-            msg="Item not deleted"
+            # Check if the item exists
+            item_exists = Lowerdetsils.objects.filter(Catid=searchid).exists()
+            if item_exists:
+                # Delete the item
+                Lowerdetsils.objects.filter(Catid=searchid).delete()
+                msg = f"Item with Id {searchid} deleted successfully from Lower details."
+            else:
+                msg = f"No item found with Id {searchid} in Lower details."
+        except Exception as e:
+            msg = f"An error occurred while deleting the item: {str(e)}"
         print(msg)
 
-    return render(request,'Deletelower.html',{'curl':curl,'msg':msg})
-def deleteuser(request):
-    msg=''
-    if request.method=="POST":
-        searchid=request.POST.get('searchid')
-        print(searchid)
+    return render(request, 'Deletelower.html', {'curl': curl, 'msg': msg})
+
+
+def deletecustumer(request):
+    msg = ''
+    if request.method == "POST":
+        Custumerid = request.POST.get('searchid')
+        print(Custumerid)
         try:
-            User.objects.filter(userid=searchid).delete()
-            msg="User deleted"
-        except:
-            msg="User not deleted"
+            # Check if the customer exists
+            customer_exists = Addcustumer.objects.filter(Custumerid=Custumerid).exists()
+            if customer_exists:
+                # Delete the customer
+                Addcustumer.objects.filter(Custumerid=Custumerid).delete()
+                msg = "Customer deleted successfully."
+            else:
+                msg = f"Customer with Id {Custumerid} does not exist."
+        except Exception as e:
+            msg = f"An error occurred: {str(e)}"
         print(msg)
     
-    return render(request,'Deleteuser.html',{'curl':curl,'msg':msg})
+    return render(request, 'Deleteuser.html', {'curl': curl, 'msg': msg})
+
 
 
 # def filter(request):
